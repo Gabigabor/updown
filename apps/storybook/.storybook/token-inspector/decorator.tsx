@@ -72,7 +72,7 @@ function winningDeclarations(el: Element) {
         const matching = rule.selectorText.split(',').map((s) => s.trim()).filter((s) => matchesSelector(el, s));
         if (!matching.length) continue;
         const spec = Math.max(...matching.map(specificity));
-        for (const [, prop, raw] of rule.style.cssText.matchAll(/([\w-]+)\s*:\s*([^;]+)/g)) {
+        for (const [, prop = '', raw = ''] of rule.style.cssText.matchAll(/([\w-]+)\s*:\s*([^;]+)/g)) {
           const value = raw.replace(/\s*!important\s*$/, '').trim();
           if (SKIP.has(prop) || (!prop.startsWith('--_') && !value.includes('var(--ingrid-'))) continue;
           const current = winners.get(prop);
@@ -104,11 +104,11 @@ function inspect(el: Element, theme: Theme): TokenResult {
   const style = getComputedStyle(el);
   const rows: TokenRow[] = [];
   for (const d of winningDeclarations(el).values()) {
-    const names = [...d.value.matchAll(/var\((--ingrid-[\w-]+)\)/g)].map((m) => m[1]);
+    const names = [...d.value.matchAll(/var\((--ingrid-[\w-]+)\)/g)].map((m) => m[1] ?? '');
     const resolved = d.prop.startsWith('--_')
       ? style.getPropertyValue(d.prop).trim()
       : names.length === 1
-        ? style.getPropertyValue(names[0]).trim()
+        ? style.getPropertyValue(names[0] ?? '').trim()
         : style.getPropertyValue(d.prop).trim();
     const colour = isColour(resolved);
     rows.push({
@@ -127,7 +127,7 @@ function inspect(el: Element, theme: Theme): TokenResult {
             : colour || d.prop === 'outline'
               ? 'Colour'
               : 'Size & spacing',
-      active: d.prop in STATE_PROPS ? el.hasAttribute(STATE_PROPS[d.prop]) : undefined,
+      active: d.prop in STATE_PROPS ? el.hasAttribute(STATE_PROPS[d.prop] ?? '') : undefined,
     });
   }
   const states = ['disabled', 'pressed', 'hovered', 'focus-visible'].filter((s) => el.hasAttribute(`data-${s}`));

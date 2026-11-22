@@ -14,8 +14,8 @@ const allTokens: Token[] = Object.entries(tokens).map(([path, ref]) => {
   return {
     path,
     cssVar: ref.slice(4, -1), // "var(--x)" -> "--x"
-    group: parts.slice(1, -1).join(' / ') || parts[0],
-    name: parts[parts.length - 1],
+    group: parts.slice(1, -1).join(' / ') || (parts[0] ?? ''),
+    name: parts.at(-1) ?? '',
   };
 });
 

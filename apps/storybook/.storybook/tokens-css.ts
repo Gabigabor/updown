@@ -12,9 +12,9 @@ export const declared: Record<Theme, Map<string, string>> = (() => {
   const css = tokensCss
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, '');
-  for (const [, selector, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+  for (const [, selector = '', body = ''] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
     const target = selector.includes('data-theme="dark"') ? dark : light;
-    for (const [, name, value] of body.matchAll(/(--ingrid-[\w-]+)\s*:\s*([^;]+);/g)) {
+    for (const [, name = '', value = ''] of body.matchAll(/(--ingrid-[\w-]+)\s*:\s*([^;]+);/g)) {
       target.set(name, value.trim());
     }
   }
