@@ -1,0 +1,13 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# updown
+
+A code-first design system proof of concept. **Code is the source of truth**; the Figma library is generated from it.
+
+- **Tokens** live in `packages/tokens/src/ingrid.tokens.json`, in the Ingrid variable format: Primitives → semantic collections (Colors, Opacity, Sizes, Typography) → category collections (Inputs) → text styles.
+- **Components** live in `packages/react/src`. Each has four files: the component, a CSS Module that uses only tokens, a **contract** (`*.contract.ts`) and stories.
+- **Contracts** list every prop, state and token binding. `pnpm contracts` checks them against the tokens, the CSS and the stories, and writes `contracts.json` for the Figma generator.
+
+Use the **Theme** toolbar button to switch between Light and Dark.

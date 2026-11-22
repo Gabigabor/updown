@@ -1,0 +1,15 @@
+{
+  "name": "@updown/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Component contract schema, validator and the generated contracts.json.",
+  "type": "module",
+  "types": "src/index.ts",
+  "exports": {
+    ".": { "types": "./src/index.ts" },
+    "./contracts.json": "./dist/contracts.json"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

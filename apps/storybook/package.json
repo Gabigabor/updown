@@ -1,0 +1,26 @@
+{
+  "name": "@updown/storybook",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o ../../storybook-static"
+  },
+  "dependencies": {
+    "@updown/react": "workspace:*",
+    "@updown/tokens": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.0.0",
+    "@storybook/addon-docs": "^10.0.0",
+    "@storybook/react-vite": "^10.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "storybook": "^10.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
+  }
+}
