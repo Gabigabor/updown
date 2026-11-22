@@ -6,7 +6,8 @@ import contract from './Button.contract.ts';
 const { appearance, variant, size } = contract.props;
 
 const meta = {
-  title: contract.storybook.title,
+  // Storybook needs a string literal here; pnpm contracts checks it equals contract.storybook.title.
+  title: 'Inputs/Button',
   component: Button,
   tags: ['autodocs'],
   args: { children: 'Button' },

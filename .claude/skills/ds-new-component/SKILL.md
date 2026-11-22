@@ -45,7 +45,8 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
    `:global([data-preview-state='…']) > .root` for the AllStates story.
 4. **`<Name>.stories.tsx`**: `Playground`, one story per variant group, `AllStates`
    (the full appearance × variant × state matrix, columns = State, inverse rows on
-   `surface/inverse`), and a keyboard `play` test. Title from `contract.storybook.title`.
+   `surface/inverse`), and a keyboard `play` test. The meta `title` must be a string literal equal to
+   `contract.storybook.title` (Storybook can't read a variable there; `pnpm contracts` checks it).
 5. Export it from `packages/react/src/index.ts`.
 
 ## 4. Check

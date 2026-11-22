@@ -147,6 +147,9 @@ for (const file of files.sort()) {
     for (const story of ['Playground', 'AllStates']) {
       if (!new RegExp(`export const ${story}\\b`).test(src)) err(`${name}.stories.tsx has no "${story}" story`);
     }
+    // Storybook only accepts a string literal title, so it can't be read from the contract.
+    const title = src.match(/\btitle:\s*(['"])(.+?)\1/)?.[2];
+    if (title !== contract.storybook.title) err(`${name}.stories.tsx title is ${title ? `"${title}"` : 'not a string literal'}; the contract says "${contract.storybook.title}"`);
   }
 
   out.push({ ...contract, source: rel, combinations: cells.length, resolvedTokens: Object.fromEntries(resolved), matrix: cells });
