@@ -7,14 +7,27 @@
   "main": "dist/tokens.js",
   "types": "dist/tokens.d.ts",
   "exports": {
-    ".": { "types": "./dist/tokens.d.ts", "default": "./dist/tokens.js" },
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
     "./tokens.css": "./dist/tokens.css",
     "./text-styles.css": "./dist/text-styles.css",
     "./ingrid.tokens.json": "./src/ingrid.tokens.json"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "validate": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "^10.0.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
   }
 }

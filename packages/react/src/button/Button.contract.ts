@@ -12,9 +12,9 @@ export default {
   anatomy: ['container', 'leading-icon', 'label', 'trailing-icon', 'state-overlay', 'focus-ring'],
 
   props: {
-    appearance: { values: ['filled', 'outlined', 'text'], default: 'filled', figma: 'Appearance', description: 'Emphasis: filled is strongest, text is lightest.' },
-    variant: { values: ['primary', 'neutral', 'destructive', 'inverse'], default: 'primary', figma: 'Variant', description: 'Colour role. Inverse is only for surface/inverse backgrounds.' },
-    size: { values: ['small', 'medium', 'large'], default: 'medium', figma: 'Size', description: '24, 32 or 44 px high.' },
+    appearance: { values: ['filled', 'outlined', 'text'], default: 'filled', figma: 'Appearance', description: 'Emphasis: Filled (highest), Outlined (medium), Text (lowest).' },
+    variant: { values: ['primary', 'neutral', 'destructive', 'inverse'], default: 'primary', figma: 'Variant', description: 'Primary for the main action, Neutral for secondary actions, Destructive for actions that delete or can’t be undone, Inverse only on dark backgrounds (surface/inverse).' },
+    size: { values: ['small', 'medium', 'large'], default: 'medium', figma: 'Size', description: 'Height: Small 24 px, Medium 32 px, Large 44 px.' },
   },
   states: ['default', 'hovered', 'pressed', 'focused', 'disabled'],
   stateTokenNames: { hovered: 'hover', pressed: 'pressed', focused: 'focus' },

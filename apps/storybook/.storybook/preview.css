@@ -1,9 +1,0 @@
-/* Storybook canvas only: the page surface in the current theme. */
-.updown-canvas {
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: var(--ingrid-spacing-xl);
-  background: var(--ingrid-color-surface-default);
-  color: var(--ingrid-color-surface-on-surface-default);
-  font-family: var(--ingrid-font-family-sans);
-}

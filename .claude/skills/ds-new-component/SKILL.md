@@ -43,9 +43,18 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
    one of them. No raw values. State overlays on a `::before` layer, focus ring as an outline
    outside the border, disabled through the disabled tokens (never opacity). Support
    `:global([data-preview-state='…']) > .root` for the AllStates story.
-4. **`<Name>.stories.tsx`**: `Playground`, one story per variant group, `AllStates`
-   (the full appearance × variant × state matrix, columns = State, inverse rows on
-   `surface/inverse`), and a keyboard `play` test. The meta `title` must be a string literal equal to
+4. **`<Name>.stories.tsx`**, laid out like `Button.stories.tsx`:
+   - meta with `tags: ['autodocs']`, so the Docs page (live example, Show code, property
+     table) is the component's main page;
+   - controls named after the Figma property names in the contract (`contract.props.x.figma`),
+     plus Label, icon switches and Disabled, listed in `parameters.controls.include`;
+     descriptions from the contract, ending with ``Prop: `name`.``;
+   - `parameters.tokenInspector.selector` set to the component's root, for the Tokens tab;
+   - an inverse decorator that puts inverse variants on `surface/inverse` in Light mode;
+   - `Playground` with `tags: ['!dev']` (shown on the Docs page only);
+   - `AllVariants` (every appearance × variant × size, plus disabled) and `AllStates`
+     (appearance × variant × state, columns = State), both `tags: ['!autodocs']` with the
+     token inspector disabled. The meta `title` must be a string literal equal to
    `contract.storybook.title` (Storybook can't read a variable there; `pnpm contracts` checks it).
 5. Export it from `packages/react/src/index.ts`.
 

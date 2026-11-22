@@ -1,21 +1,13 @@
-import type { Decorator, Preview } from '@storybook/react-vite';
+import type { Preview } from '@storybook/react-vite';
+import { withTokenInspector } from './token-inspector/decorator';
 import '@updown/tokens/tokens.css';
 import '@updown/tokens/text-styles.css';
-import './preview.css';
-
-// Light / Dark from the toolbar. The theme is set on a wrapper, exactly as an app would.
-const withTheme: Decorator = (Story, context) => (
-  <div data-theme={context.globals.theme ?? 'light'} className="updown-canvas">
-    <Story />
-  </div>
-);
 
 const preview: Preview = {
   globalTypes: {
     theme: {
-      description: 'Colors mode',
+      description: 'Colour mode (Colors collection)',
       toolbar: {
-        title: 'Theme',
         icon: 'mirror',
         items: [
           { value: 'light', title: 'Light' },
@@ -26,10 +18,19 @@ const preview: Preview = {
     },
   },
   initialGlobals: { theme: 'light' },
-  decorators: [withTheme],
+  decorators: [
+    // Feeds the Tokens tab on stories that set parameters.tokenInspector (inside the theme wrapper).
+    withTokenInspector,
+    (Story, { globals }) => (
+      <div
+        data-theme={globals.theme}
+        style={{ background: 'var(--ingrid-color-surface-default)', padding: 'var(--ingrid-spacing-lg)', minHeight: '100%' }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    layout: 'fullscreen',
-    controls: { expanded: true },
     // Accessibility violations fail story tests (when the Vitest addon is added).
     a11y: { test: 'error' },
   },

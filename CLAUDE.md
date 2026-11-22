@@ -10,7 +10,8 @@ Never treat Figma as an input: a difference between Figma and code is drift to f
   `dist/` is generated; never edit it.
 - `packages/contracts`: the contract schema (`src/index.ts`) and its validator.
 - `packages/react/src/<component>/`: `<Name>.tsx`, `<Name>.module.css`, `<Name>.contract.ts`, `<Name>.stories.tsx`.
-- `apps/storybook`: Storybook 10 config and foundation pages.
+- `apps/storybook/.storybook`: Storybook 10 config and the Tokens tab add-on (token inspector).
+- `packages/tokens/src/Tokens.stories.tsx`: the Tokens pages (one per collection).
 - `.claude/skills/`: `ds-add-token`, `ds-new-component`.
 
 ## Rules

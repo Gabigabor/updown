@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": [
+    "src",
+    "../../apps/storybook/.storybook/tokens-css.ts"
+  ]
+}

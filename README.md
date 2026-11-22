@@ -29,7 +29,7 @@ Requires Node 22.18 or later (contracts are TypeScript files that Node loads dir
 | `packages/tokens` | `@updown/tokens`: the token JSON in the [Ingrid variable format](https://github.com/Gabigabor/InGrid/blob/main/docs/variable-taxonomy.md) (621 tokens, 15 text styles), its build and its validator. |
 | `packages/contracts` | `@updown/contracts`: the contract schema and the validator that writes `contracts.json`. |
 | `packages/react` | `@updown/react`: components on [React Aria Components](https://react-spectrum.adobe.com/react-aria/), styled only with tokens. |
-| `apps/storybook` | Storybook 10: component stories, foundation pages generated from the tokens, Light/Dark toolbar. |
+| `apps/storybook` | Storybook 10 config: Light/Dark toolbar and a **Tokens** tab next to Controls that shows which token is behind each property of the selected component. Stories live next to their code: `packages/*/src/**/*.stories.tsx`. |
 | `scripts/check-css-tokens.mjs` | Fails on raw values or non-category tokens in component CSS. |
 | `.claude/skills` | Claude skills: `ds-add-token`, `ds-new-component`. |
 
