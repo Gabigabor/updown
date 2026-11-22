@@ -11,7 +11,7 @@
     "contracts": "node packages/contracts/scripts/build.mjs",
     "lint:css": "node scripts/check-css-tokens.mjs",
     "check": "pnpm tokens && pnpm tokens:validate && pnpm contracts && pnpm lint:css",
-    "typecheck": "tsc -p packages/react --noEmit",
+    "typecheck": "tsc -p packages/react --noEmit && tsc -p apps/storybook --noEmit",
     "storybook": "pnpm tokens && pnpm --filter @updown/storybook dev",
     "build-storybook": "pnpm tokens && pnpm --filter @updown/storybook build"
   },

@@ -12,9 +12,9 @@ const meta = {
   tags: ['autodocs'],
   args: { children: 'Button' },
   argTypes: {
-    appearance: { control: 'inline-radio', options: appearance.values, description: appearance.description },
-    variant: { control: 'inline-radio', options: variant.values, description: variant.description },
-    size: { control: 'inline-radio', options: size.values, description: size.description },
+    appearance: { control: 'inline-radio', options: appearance.values, description: appearance.description, table: { defaultValue: { summary: appearance.default } } },
+    variant: { control: 'inline-radio', options: variant.values, description: variant.description, table: { defaultValue: { summary: variant.default } } },
+    size: { control: 'inline-radio', options: size.values, description: size.description, table: { defaultValue: { summary: size.default } } },
     isDisabled: { control: 'boolean' },
   },
   parameters: {
