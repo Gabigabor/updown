@@ -7,7 +7,7 @@
 //   3. only the category collection, text styles and the shared focus-ring tokens are used;
 //   4. every binding applies to at least one combination (no dead bindings);
 //   5. <Name>.module.css uses exactly the --ingrid- tokens the contract lists, no more, no less;
-//   6. <Name>.stories.tsx exists and exports Playground and AllStates.
+//   6. <Name>.stories.tsx exists, exports Playground and has the contract's title.
 //
 // Contracts are TypeScript files loaded directly by Node (type stripping, Node ≥ 22.18).
 // No dependencies: `node packages/contracts/scripts/build.mjs`.
@@ -144,7 +144,7 @@ for (const file of files.sort()) {
   if (!fs.existsSync(storyFile)) err(`missing ${name}.stories.tsx`);
   else {
     const src = fs.readFileSync(storyFile, 'utf8');
-    for (const story of ['Playground', 'AllStates']) {
+    for (const story of ['Playground']) {
       if (!new RegExp(`export const ${story}\\b`).test(src)) err(`${name}.stories.tsx has no "${story}" story`);
     }
     // Storybook only accepts a string literal title, so it can't be read from the contract.

@@ -39,7 +39,7 @@ Requires Node 22.18 or later (contracts are TypeScript files that Node loads dir
 | --- | --- |
 | `pnpm tokens` | A token has no valid code syntax, two share a CSS name, or an alias is broken. |
 | `pnpm tokens:validate` | A token breaks the taxonomy: missing description, scopes or mode; `ALL_SCOPES`; a raw value above the primitive tier; an alias that skips a tier; a text style not bound to Typography. Contrast below 4.5:1 is a warning. |
-| `pnpm contracts` | A contract binding points at a missing token, two bindings collide, a binding never applies, the CSS Module uses a token the contract doesn't list (or misses one it does), or the stories lack `Playground` / `AllStates` or a title matching the contract. |
+| `pnpm contracts` | A contract binding points at a missing token, two bindings collide, a binding never applies, the CSS Module uses a token the contract doesn't list (or misses one it does), or the stories lack `Playground` or a title matching the contract. |
 | `pnpm lint:css` | Component CSS has raw values, primitives or non-category semantic tokens. |
 
 ## Roadmap
