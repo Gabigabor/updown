@@ -5,19 +5,54 @@
   "description": "One file per component (<Name>.contract.json): what the component is, its props and states, and exactly which token each part uses in each combination. Checked by `pnpm contracts`.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["name", "status", "description", "category", "anatomy", "props", "states", "tokens", "a11y", "rules", "figma", "storybook"],
+  "required": [
+    "name",
+    "status",
+    "description",
+    "category",
+    "anatomy",
+    "props",
+    "states",
+    "tokens",
+    "a11y",
+    "rules",
+    "figma",
+    "storybook"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "name": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$", "description": "Component name; must match the file name." },
-    "status": { "enum": ["alpha", "beta", "stable", "deprecated"] },
-    "description": { "type": "string", "minLength": 1 },
-    "category": { "type": "string", "description": "Token collection key of the component's category, e.g. \"inputs\"." },
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$",
+      "description": "Component name; must match the file name."
+    },
+    "status": {
+      "enum": [
+        "alpha",
+        "beta",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "description": "Token collection key of the component's category, e.g. \"inputs\"."
+    },
     "anatomy": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
-      "description": "Named layers. These become Figma layer names."
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "description": "Named layers. These become Figma layer names, and each must be marked in the component with data-part=\"<name>\"."
     },
     "props": {
       "type": "object",
@@ -25,12 +60,30 @@
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["values", "default", "figma"],
+        "required": [
+          "values",
+          "default",
+          "figma"
+        ],
         "properties": {
-          "values": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
-          "default": { "type": "string" },
-          "figma": { "type": "string", "description": "Figma component property name, e.g. \"Appearance\"." },
-          "description": { "type": "string" }
+          "values": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "type": "string"
+          },
+          "figma": {
+            "type": "string",
+            "description": "Figma component property name, e.g. \"Appearance\"."
+          },
+          "description": {
+            "type": "string"
+          }
         }
       }
     },
@@ -38,12 +91,16 @@
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Interaction states, \"default\" first. In Figma they become the State property."
     },
     "stateTokenNames": {
       "type": "object",
-      "additionalProperties": { "type": "string" },
+      "additionalProperties": {
+        "type": "string"
+      },
       "description": "How state names appear inside token names, e.g. { \"hovered\": \"hover\" }."
     },
     "tokens": {
@@ -51,10 +108,20 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["part", "property", "token"],
+        "required": [
+          "part",
+          "property",
+          "token"
+        ],
         "properties": {
-          "part": { "type": "string", "description": "One of the anatomy parts." },
-          "property": { "type": "string", "description": "e.g. background, border, color, height, textStyle." },
+          "part": {
+            "type": "string",
+            "description": "One of the anatomy parts."
+          },
+          "property": {
+            "type": "string",
+            "description": "e.g. background, border, color, height, textStyle."
+          },
           "token": {
             "type": "string",
             "description": "Token path with slashes, relative to the category collection ('color/{variant}/{appearance}/label'), absolute for the shared focus-ring tokens ('colors/focus-ring'), or a text style name when property is textStyle ('Label/Medium'). {prop} and {state} placeholders are filled per combination."
@@ -62,7 +129,13 @@
           "when": {
             "type": "object",
             "description": "Limits the binding to combinations whose values are all in these lists. Keys: prop names or \"state\".",
-            "additionalProperties": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+            "additionalProperties": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
           }
         }
       }
@@ -70,41 +143,154 @@
     "a11y": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["role", "requires", "keyboard"],
+      "required": [
+        "role",
+        "requires",
+        "keyboard"
+      ],
       "properties": {
-        "role": { "type": "string" },
-        "requires": { "type": "array", "items": { "type": "string" } },
-        "keyboard": { "type": "array", "items": { "type": "string" } }
+        "role": {
+          "type": "string"
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "keyboard": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "rules": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["do", "dont"],
+      "required": [
+        "do",
+        "dont"
+      ],
       "properties": {
-        "do": { "type": "array", "items": { "type": "string" } },
-        "dont": { "type": "array", "items": { "type": "string" } }
+        "do": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "example": {
+                "type": "array",
+                "minItems": 1,
+                "description": "Live example shown with the rule on the Docs page: one entry per component instance, as its props (children = the label). Props that are contract variant props must use one of their values.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean"
+                    ]
+                  }
+                }
+              },
+              "background": {
+                "enum": [
+                  "auto",
+                  "surface",
+                  "inverse"
+                ],
+                "description": "Where the example sits. auto (default): on surface/inverse when the props match figma.lockLightMode, otherwise on the page surface."
+              }
+            }
+          }
+        },
+        "dont": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "example": {
+                "type": "array",
+                "minItems": 1,
+                "description": "Live example shown with the rule on the Docs page: one entry per component instance, as its props (children = the label). Props that are contract variant props must use one of their values.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean"
+                    ]
+                  }
+                }
+              },
+              "background": {
+                "enum": [
+                  "auto",
+                  "surface",
+                  "inverse"
+                ],
+                "description": "Where the example sits. auto (default): on surface/inverse when the props match figma.lockLightMode, otherwise on the page surface."
+              }
+            }
+          }
+        }
       }
     },
     "figma": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["componentSet", "stateProperty"],
+      "required": [
+        "componentSet",
+        "stateProperty"
+      ],
       "properties": {
-        "componentSet": { "type": "string" },
-        "stateProperty": { "type": "string" },
+        "componentSet": {
+          "type": "string"
+        },
+        "stateProperty": {
+          "type": "string"
+        },
         "lockLightMode": {
           "type": "object",
           "description": "Combinations that keep the Light Colors mode in both themes (Ingrid: inverse).",
-          "additionalProperties": { "type": "array", "items": { "type": "string" } }
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     },
     "storybook": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["title"],
-      "properties": { "title": { "type": "string" } }
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        }
+      }
     }
   }
 }

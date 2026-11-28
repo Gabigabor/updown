@@ -61,7 +61,7 @@ function matchesSelector(el: Element, selector: string) {
   }
 }
 
-function winningDeclarations(el: Element) {
+export function winningDeclarations(el: Element) {
   const winners = new Map<string, Declaration>();
   let order = 0;
 

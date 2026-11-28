@@ -48,13 +48,22 @@ export interface TokenBinding {
   when?: Readonly<Record<string, readonly string[]>>;
 }
 
+/** A usage rule, optionally with a live example shown on the Docs page. */
+export interface ContractRule {
+  text: string;
+  /** One entry per component instance, as its props; `children` is the label. */
+  example?: readonly Readonly<Record<string, string | number | boolean>>[];
+  /** Where the example sits; 'auto' follows figma.lockLightMode. */
+  background?: 'auto' | 'surface' | 'inverse';
+}
+
 export interface Contract {
   name: string;
   status: ContractStatus;
   description: string;
   /** Token collection key of the component's category, e.g. 'inputs'. */
   category: string;
-  /** Named layers. These become Figma layer names. */
+  /** Named layers. These become Figma layer names; each is marked with data-part in the component. */
   anatomy: readonly string[];
   props: Readonly<Record<string, VariantProp>>;
   /** Interaction states. 'default' first. In Figma they become the State property. */
@@ -68,8 +77,8 @@ export interface Contract {
     keyboard: readonly string[];
   };
   rules: {
-    do: readonly string[];
-    dont: readonly string[];
+    do: readonly ContractRule[];
+    dont: readonly ContractRule[];
   };
   figma: {
     componentSet: string;

@@ -1,12 +1,12 @@
 // Stable, readable JSON for contracts: two-space indent, but short arrays of strings and
-// every token binding on one line, so a contract reads like a table.
+// every token binding and rule example on one line, so a contract reads like a table.
 export function formatContract(value) {
   const inline = (v) => JSON.stringify(v).replace(/,(?=["{\[])/g, ', ').replace(/":/g, '": ');
   const fmt = (v, indent, key) => {
     const pad = '  '.repeat(indent);
     if (Array.isArray(v)) {
       if (v.every((x) => typeof x !== 'object') && inline(v).length <= 100) return inline(v);
-      if (key === 'tokens') return `[\n${v.map((b) => `${pad}  ${inline(b)}`).join(',\n')}\n${pad}]`;
+      if (key === 'tokens' || key === 'example') return `[\n${v.map((b) => `${pad}  ${inline(b)}`).join(',\n')}\n${pad}]`;
       return `[\n${v.map((x) => `${pad}  ${fmt(x, indent + 1)}`).join(',\n')}\n${pad}]`;
     }
     if (v && typeof v === 'object') {

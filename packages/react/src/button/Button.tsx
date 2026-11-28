@@ -49,10 +49,14 @@ export function Button({
       data-size={size}
       // Inverse sits on a background that stays dark in both themes, so it keeps Light mode.
       data-theme={variant === 'inverse' ? 'light' : undefined}
+      // Every layer carries data-part with its contract anatomy name (the Figma layer name too).
+      data-part="container"
     >
-      {leadingIcon != null && <span className={styles.icon} aria-hidden="true">{leadingIcon}</span>}
-      {children != null && <span>{children}</span>}
-      {trailingIcon != null && <span className={styles.icon} aria-hidden="true">{trailingIcon}</span>}
+      <span className={styles.overlay} data-part="state-overlay" aria-hidden="true" />
+      {leadingIcon != null && <span className={styles.icon} data-part="leading-icon" aria-hidden="true">{leadingIcon}</span>}
+      {children != null && <span className={styles.label} data-part="label">{children}</span>}
+      {trailingIcon != null && <span className={styles.icon} data-part="trailing-icon" aria-hidden="true">{trailingIcon}</span>}
+      <span className={styles.focusRing} data-part="focus-ring" aria-hidden="true" />
     </AriaButton>
   );
 }

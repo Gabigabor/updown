@@ -245,8 +245,82 @@ declare const contract: {
     readonly "keyboard": readonly ["Enter", "Space"];
   };
   readonly "rules": {
-    readonly "do": readonly ["Use filled primary for the single main action in a view.", "Use destructive only for actions that delete or cannot be undone.", "Put inverse buttons only on surface/inverse backgrounds."];
-    readonly "dont": readonly ["Do not use more than one filled primary button in a group.", "Do not dim a disabled button with opacity; the disabled tokens already do it.", "Do not use inverse on normal surfaces; use primary or neutral."];
+    readonly "do": readonly [{
+      readonly "text": "Use filled primary for the single main action in a view; pair it with outlined or text buttons.";
+      readonly "example": readonly [{
+        readonly "appearance": "filled";
+        readonly "variant": "primary";
+        readonly "children": "Save";
+      }, {
+        readonly "appearance": "outlined";
+        readonly "variant": "neutral";
+        readonly "children": "Cancel";
+      }];
+    }, {
+      readonly "text": "Use destructive only for actions that delete or can’t be undone.";
+      readonly "example": readonly [{
+        readonly "appearance": "text";
+        readonly "variant": "neutral";
+        readonly "children": "Keep";
+      }, {
+        readonly "appearance": "filled";
+        readonly "variant": "destructive";
+        readonly "children": "Delete project";
+      }];
+    }, {
+      readonly "text": "Put inverse buttons only on surface/inverse backgrounds.";
+      readonly "example": readonly [{
+        readonly "appearance": "filled";
+        readonly "variant": "inverse";
+        readonly "children": "Got it";
+      }, {
+        readonly "appearance": "text";
+        readonly "variant": "inverse";
+        readonly "children": "Later";
+      }];
+    }, {
+      readonly "text": "Disable with isDisabled: the disabled tokens give the 25 % look.";
+      readonly "example": readonly [{
+        readonly "appearance": "filled";
+        readonly "variant": "primary";
+        readonly "isDisabled": true;
+        readonly "children": "Save";
+      }, {
+        readonly "appearance": "outlined";
+        readonly "variant": "primary";
+        readonly "isDisabled": true;
+        readonly "children": "Cancel";
+      }];
+    }];
+    readonly "dont": readonly [{
+      readonly "text": "Don’t put two filled primary buttons side by side: nothing tells the user which is the main action.";
+      readonly "example": readonly [{
+        readonly "appearance": "filled";
+        readonly "variant": "primary";
+        readonly "children": "Save";
+      }, {
+        readonly "appearance": "filled";
+        readonly "variant": "primary";
+        readonly "children": "Cancel";
+      }];
+    }, {
+      readonly "text": "Don’t use destructive for actions that can be undone.";
+      readonly "example": readonly [{
+        readonly "appearance": "filled";
+        readonly "variant": "destructive";
+        readonly "children": "Archive";
+      }];
+    }, {
+      readonly "text": "Don’t use inverse on normal surfaces; use primary or neutral.";
+      readonly "background": "surface";
+      readonly "example": readonly [{
+        readonly "appearance": "filled";
+        readonly "variant": "inverse";
+        readonly "children": "Got it";
+      }];
+    }, {
+      readonly "text": "Don’t dim a disabled button with opacity; the disabled tokens already do it.";
+    }];
   };
   readonly "figma": {
     readonly "componentSet": "Button";

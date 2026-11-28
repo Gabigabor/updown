@@ -69,14 +69,59 @@
   },
   "rules": {
     "do": [
-      "Use filled primary for the single main action in a view.",
-      "Use destructive only for actions that delete or cannot be undone.",
-      "Put inverse buttons only on surface/inverse backgrounds."
+      {
+        "text": "Use filled primary for the single main action in a view; pair it with outlined or text buttons.",
+        "example": [
+          {"appearance": "filled", "variant": "primary", "children": "Save"},
+          {"appearance": "outlined", "variant": "neutral", "children": "Cancel"}
+        ]
+      },
+      {
+        "text": "Use destructive only for actions that delete or can’t be undone.",
+        "example": [
+          {"appearance": "text", "variant": "neutral", "children": "Keep"},
+          {"appearance": "filled", "variant": "destructive", "children": "Delete project"}
+        ]
+      },
+      {
+        "text": "Put inverse buttons only on surface/inverse backgrounds.",
+        "example": [
+          {"appearance": "filled", "variant": "inverse", "children": "Got it"},
+          {"appearance": "text", "variant": "inverse", "children": "Later"}
+        ]
+      },
+      {
+        "text": "Disable with isDisabled: the disabled tokens give the 25 % look.",
+        "example": [
+          {"appearance": "filled", "variant": "primary", "isDisabled": true, "children": "Save"},
+          {"appearance": "outlined", "variant": "primary", "isDisabled": true, "children": "Cancel"}
+        ]
+      }
     ],
     "dont": [
-      "Do not use more than one filled primary button in a group.",
-      "Do not dim a disabled button with opacity; the disabled tokens already do it.",
-      "Do not use inverse on normal surfaces; use primary or neutral."
+      {
+        "text": "Don’t put two filled primary buttons side by side: nothing tells the user which is the main action.",
+        "example": [
+          {"appearance": "filled", "variant": "primary", "children": "Save"},
+          {"appearance": "filled", "variant": "primary", "children": "Cancel"}
+        ]
+      },
+      {
+        "text": "Don’t use destructive for actions that can be undone.",
+        "example": [
+          {"appearance": "filled", "variant": "destructive", "children": "Archive"}
+        ]
+      },
+      {
+        "text": "Don’t use inverse on normal surfaces; use primary or neutral.",
+        "background": "surface",
+        "example": [
+          {"appearance": "filled", "variant": "inverse", "children": "Got it"}
+        ]
+      },
+      {
+        "text": "Don’t dim a disabled button with opacity; the disabled tokens already do it."
+      }
     ]
   },
   "figma": {
