@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from 'react-aria-components';
 import { textStyles } from '@updown/tokens';
 import type { PropValue } from '@updown/contracts';
-import contract from './Button.contract.ts';
+import contract from './Button.contract.json';
 import styles from './Button.module.css';
 
 // Prop types and defaults come from the contract, so code and contract can't disagree.

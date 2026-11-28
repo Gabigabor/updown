@@ -1,9 +1,9 @@
 name: CI
 
+# Every pushed branch is checked, so a change is verified before anyone opens a PR;
+# the result shows on the PR as well.
 on:
-  pull_request:
   push:
-    branches: [main]
 
 permissions:
   contents: read
@@ -22,6 +22,8 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - name: Build tokens, validate taxonomy and contracts, check component CSS
         run: pnpm check
+      - name: Generated contract types are up to date
+        run: git diff --exit-code -- '*.contract.d.json.ts' || (echo "Run pnpm contracts and commit the generated .d.json.ts files." && exit 1)
       - name: Typecheck components
         run: pnpm typecheck
       - name: Build Storybook

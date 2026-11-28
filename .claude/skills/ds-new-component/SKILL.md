@@ -30,12 +30,15 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
 
 `packages/react/src/<kebab-name>/`:
 
-1. **`<Name>.contract.ts`**: `export default { … } as const satisfies Contract;`, importing
-   only types from `@updown/contracts`. Every binding uses `when` to say which combinations
-   it applies to. Only category tokens, text styles and the shared `colors/focus-ring`,
-   `sizes/focus-ring/width` and `sizes/focus-ring/offset` are allowed.
+1. **`<Name>.contract.json`**: start with
+   `"$schema": "../../../contracts/contract.schema.json"` so the editor checks it, and keep the
+   layout of `Button.contract.json` (short lists and each token binding on one line). Every
+   binding uses `when` to say which combinations it applies to. Only category tokens, text styles and the shared `colors/focus-ring`,
+   `sizes/focus-ring/width` and `sizes/focus-ring/offset` are allowed. Run `pnpm contracts`:
+   it validates the file and generates `<Name>.contract.d.json.ts` (commit it, never edit it).
 2. **`<Name>.tsx`**: wraps the React Aria component. Prop types and defaults come from the
-   contract (`PropValue<typeof contract, 'size'>`, `contract.props.size.default`). Props
+   contract (`import contract from './<Name>.contract.json'`,
+   `PropValue<typeof contract, 'size'>`, `contract.props.size.default`). Props
    reach CSS as `data-*` attributes; React Aria adds `data-hovered`, `data-pressed`,
    `data-focus-visible`, `data-disabled`. The label gets the text-style class from
    `textStyles` in `@updown/tokens`. Inverse variants set `data-theme="light"`.

@@ -5,12 +5,13 @@
   "type": "module",
   "packageManager": "pnpm@10.28.0",
   "engines": {
-    "node": ">=22.18"
+    "node": ">=22"
   },
   "scripts": {
     "tokens": "node packages/tokens/scripts/build.mjs",
     "tokens:validate": "node packages/tokens/scripts/validate.mjs",
     "contracts": "node packages/contracts/scripts/build.mjs",
+    "contracts:format": "node packages/contracts/scripts/format.mjs",
     "lint:css": "node scripts/check-css-tokens.mjs",
     "check": "pnpm tokens && pnpm tokens:validate && pnpm contracts && pnpm lint:css",
     "typecheck": "tsc -p packages/react --noEmit && tsc -p packages/tokens --noEmit && tsc -p apps/storybook --noEmit",

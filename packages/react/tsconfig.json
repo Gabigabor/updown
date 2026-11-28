@@ -1,4 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Contract JSON is typed by its generated <Name>.contract.d.json.ts (exact literal types),
+    // not by TypeScript's own JSON loader, which would widen every value to string.
+    "resolveJsonModule": false,
+    "allowArbitraryExtensions": true
+  },
   "include": ["src"]
 }

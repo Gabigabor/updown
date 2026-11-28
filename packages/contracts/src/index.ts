@@ -1,7 +1,7 @@
 /**
  * Component contract schema.
  *
- * A contract is one machine-readable file per component (Button.contract.ts) that says what
+ * A contract is one machine-readable file per component (Button.contract.json) that says what
  * the component is, which props and states it has, and exactly which tokens each part uses
  * in each combination. TypeScript props say what compiles; the contract says what is correct.
  *
@@ -10,8 +10,9 @@
  *   - packages/contracts/scripts/build.mjs (validation + contracts.json),
  *   - Storybook docs, the Figma generator and Claude skills.
  *
- * Write contracts as `export default { … } as const satisfies Contract;` and import only
- * types from this module, so Node can load the file directly (type stripping, Node ≥ 22.18).
+ * Contracts are JSON. contract.schema.json describes the same shape for editors (add
+ * "$schema" to the file), and `pnpm contracts` generates <Name>.contract.d.json.ts next to
+ * each one, so importing the JSON gives these types with their exact literal values.
  */
 
 export type ContractStatus = 'alpha' | 'beta' | 'stable' | 'deprecated';
