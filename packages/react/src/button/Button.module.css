@@ -6,8 +6,6 @@
  *                                    data-variant     primary | neutral | destructive | inverse
  *                                    data-size        small | medium | large
  * React Aria adds interaction state: data-hovered, data-pressed, data-focus-visible, data-disabled
- *
- * [data-preview-state] on a wrapper forces a state for the AllStates story only.
  */
 
 .button {
@@ -138,18 +136,15 @@
 }
 
 /* ---- States (later rules win: focus < hover < pressed) --------------------------------- */
-.button[data-focus-visible],
-:global([data-preview-state='focused']) > .button {
+.button[data-focus-visible] {
   --_overlay: var(--_focus);
   outline: var(--ingrid-focus-ring-width) solid var(--ingrid-color-focus-ring);
   outline-offset: var(--ingrid-focus-ring-offset);
 }
-.button[data-hovered],
-:global([data-preview-state='hovered']) > .button {
+.button[data-hovered] {
   --_overlay: var(--_hover);
 }
-.button[data-pressed],
-:global([data-preview-state='pressed']) > .button {
+.button[data-pressed] {
   --_overlay: var(--_pressed);
 }
 

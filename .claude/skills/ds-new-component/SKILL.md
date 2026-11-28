@@ -41,8 +41,7 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
    `textStyles` in `@updown/tokens`. Inverse variants set `data-theme="light"`.
 3. **`<Name>.module.css`**: only `var(--ingrid-…)` tokens that the contract lists, and every
    one of them. No raw values. State overlays on a `::before` layer, focus ring as an outline
-   outside the border, disabled through the disabled tokens (never opacity). Support
-   `:global([data-preview-state='…']) > .root` for the AllStates story.
+   outside the border, disabled through the disabled tokens (never opacity).
 4. **`<Name>.stories.tsx`**, laid out like `Button.stories.tsx`:
    - meta with `tags: ['autodocs']`, so the Docs page (live example, Show code, property
      table) is the component's main page;
@@ -52,9 +51,10 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
    - `parameters.tokenInspector.selector` set to the component's root, for the Tokens tab;
    - an inverse decorator that puts inverse variants on `surface/inverse` in Light mode;
    - `Playground` with `tags: ['!dev']` (shown on the Docs page only);
-   - `AllVariants` (every appearance × variant × size, plus disabled) and `AllStates`
-     (appearance × variant × state, columns = State), both `tags: ['!autodocs']` with the
-     token inspector disabled. The meta `title` must be a string literal equal to
+   - one story per appearance (`Filled`, `Outlined`, `Text`), each a single component set
+     only through `args`, so it uses the meta defaults (primary) and works with Controls;
+   - `AllVariants` (every appearance × variant × size, plus disabled), `tags: ['!autodocs']`
+     with the token inspector disabled. The meta `title` must be a string literal equal to
    `contract.storybook.title` (Storybook can't read a variable there; `pnpm contracts` checks it).
 5. Export it from `packages/react/src/index.ts`.
 
@@ -63,7 +63,7 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
 ```sh
 pnpm check       # tokens, taxonomy, contracts (tokens ↔ CSS ↔ stories), component CSS
 pnpm typecheck
-pnpm storybook   # look at AllStates in Light and Dark
+pnpm storybook   # look at each story and AllVariants in Light and Dark; hover, press and tab
 ```
 
 All must pass. In Storybook, check the a11y panel shows no violations and that focus rings

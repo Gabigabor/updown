@@ -123,6 +123,15 @@ type Story = StoryObj<typeof meta>;
 /** Shown at the top of the Docs page; hidden from the sidebar, because the Docs page replaces it. */
 export const Playground: Story = { tags: ['!dev'] };
 
+/** Highest emphasis: the main action in a view. Change Variant in Controls for the other colours. */
+export const Filled: Story = { args: { appearance: 'filled' } };
+
+/** Medium emphasis: secondary actions next to a filled button. */
+export const Outlined: Story = { args: { appearance: 'outlined' } };
+
+/** Lowest emphasis: tertiary actions and actions inside dense layouts. */
+export const Text: Story = { args: { appearance: 'text' } };
+
 /** Every Appearance × Variant × Size, like the Figma component set. Inverse sits on the inverse surface. */
 export const AllVariants: Story = {
   // Its own sidebar page, but not on the Docs page.
@@ -157,48 +166,4 @@ export const AllVariants: Story = {
       ))}
     </div>
   ),
-};
-
-/**
- * Appearance × Variant × State at medium size: the contract matrix, laid out like the Figma
- * component set (columns = State). Hovered, Pressed and Focused are forced with a wrapper
- * attribute here; in use they come from React Aria.
- */
-export const AllStates: Story = {
-  tags: ['!autodocs'],
-  parameters: { tokenInspector: { disable: true } },
-  render: () => {
-    const head = { textAlign: 'left', color: 'var(--ingrid-color-surface-on-surface-subtle)' } as const;
-    return (
-      <table style={{ borderCollapse: 'separate', borderSpacing: '16px 12px' }}>
-        <thead>
-          <tr>
-            <th />
-            {contract.states.map((s) => (
-              <th key={s} className="ingrid-text-label-small" style={head}>{s}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {appearance.values.flatMap((a) =>
-            variant.values.map((v) => {
-              const inverse = v === 'inverse';
-              return (
-                <tr key={`${a}-${v}`} data-theme={inverse ? 'light' : undefined} style={inverse ? { background: 'var(--ingrid-color-surface-inverse)' } : undefined}>
-                  <th className="ingrid-text-label-small" style={{ ...head, color: inverse ? 'var(--ingrid-color-surface-on-surface-inverse)' : head.color }}>{`${a} ${v}`}</th>
-                  {contract.states.map((s) => (
-                    <td key={s}>
-                      <span data-preview-state={s === 'disabled' || s === 'default' ? undefined : s} style={{ display: 'inline-block' }}>
-                        <Button appearance={a} variant={v} isDisabled={s === 'disabled'} leadingIcon={<Plus />}>Button</Button>
-                      </span>
-                    </td>
-                  ))}
-                </tr>
-              );
-            }),
-          )}
-        </tbody>
-      </table>
-    );
-  },
 };
