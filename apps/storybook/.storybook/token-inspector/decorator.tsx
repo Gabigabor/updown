@@ -61,7 +61,7 @@ function matchesSelector(el: Element, selector: string) {
   }
 }
 
-function winningDeclarations(el: Element) {
+export function winningDeclarations(el: Element) {
   const winners = new Map<string, Declaration>();
   let order = 0;
 
@@ -98,7 +98,7 @@ function winningDeclarations(el: Element) {
   return winners;
 }
 
-const isColour = (v: string) => !!v && !/^-?[\d.]+(px)?$/.test(v) && CSS.supports('color', v);
+const isColour = (v: string) => !!v && !/^-?[\d.]+(px|rem)?$/.test(v) && CSS.supports('color', v);
 
 function inspect(el: Element, theme: Theme): TokenResult {
   const style = getComputedStyle(el);

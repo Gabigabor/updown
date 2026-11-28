@@ -8447,7 +8447,7 @@
       "default": {
         "$type": "color",
         "$value": "{primitives.color.neutral.300}",
-        "$description": "Standard border width (1px) for inputs, cards and dividers. Pair with a border/* colour.",
+        "$description": "Standard border width (0.0625rem, 1px) for inputs, cards and dividers. Pair with a border/* colour.",
         "$extensions": {
           "com.figma": {
             "collection": "Colors",
@@ -8467,7 +8467,7 @@
       "strong": {
         "$type": "color",
         "$value": "{primitives.color.neutral.400}",
-        "$description": "Emphasised border width (2px) for focus rings and selected outlines.",
+        "$description": "Emphasised border width (0.125rem, 2px) for focus rings and selected outlines.",
         "$extensions": {
           "com.figma": {
             "collection": "Colors",
@@ -8656,7 +8656,7 @@
       "default": {
         "$type": "number",
         "$value": "{primitives.size.25}",
-        "$description": "Standard border width (1px) for inputs, cards and dividers. Pair with a border/* colour.",
+        "$description": "Standard border width (0.0625rem, 1px) for inputs, cards and dividers. Pair with a border/* colour.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8675,7 +8675,7 @@
       "strong": {
         "$type": "number",
         "$value": "{primitives.size.50}",
-        "$description": "Emphasised border width (2px) for focus rings and selected outlines.",
+        "$description": "Emphasised border width (0.125rem, 2px) for focus rings and selected outlines.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8694,7 +8694,7 @@
       "heavy": {
         "$type": "number",
         "$value": "{primitives.size.100}",
-        "$description": "Heaviest border width (4px) for active tab indicators and accent bars.",
+        "$description": "Heaviest border width (0.25rem, 4px) for active tab indicators and accent bars.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8734,7 +8734,7 @@
       "3xs": {
         "$type": "number",
         "$value": "{primitives.size.50}",
-        "$description": "Spacing 2px — minimal offsets, e.g. badge to icon. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 0.125rem (2px) — minimal offsets, e.g. badge to icon. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8753,7 +8753,7 @@
       "2xs": {
         "$type": "number",
         "$value": "{primitives.size.100}",
-        "$description": "Spacing 4px — tight gaps inside compact components. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 0.25rem (4px) — tight gaps inside compact components. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8772,7 +8772,7 @@
       "xs": {
         "$type": "number",
         "$value": "{primitives.size.200}",
-        "$description": "Spacing 8px — gap between an icon and its label; small paddings. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 0.5rem (8px) — gap between an icon and its label; small paddings. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8791,7 +8791,7 @@
       "sm": {
         "$type": "number",
         "$value": "{primitives.size.300}",
-        "$description": "Spacing 12px — inner padding of compact components and gaps in lists. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 0.75rem (12px) — inner padding of compact components and gaps in lists. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8810,7 +8810,7 @@
       "md": {
         "$type": "number",
         "$value": "{primitives.size.400}",
-        "$description": "Spacing 16px — default padding of cards and containers. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 1rem (16px) — default padding of cards and containers. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8829,7 +8829,7 @@
       "lg": {
         "$type": "number",
         "$value": "{primitives.size.600}",
-        "$description": "Spacing 24px — gaps between cards; section padding on mobile. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 1.5rem (24px) — gaps between cards; section padding on mobile. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8848,7 +8848,7 @@
       "xl": {
         "$type": "number",
         "$value": "{primitives.size.800}",
-        "$description": "Spacing 32px — section padding. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 2rem (32px) — section padding. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8867,7 +8867,7 @@
       "2xl": {
         "$type": "number",
         "$value": "{primitives.size.900}",
-        "$description": "Spacing 36px — large section padding. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 2.25rem (36px) — large section padding. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8886,7 +8886,7 @@
       "3xl": {
         "$type": "number",
         "$value": "{primitives.size.1000}",
-        "$description": "Spacing 40px — spacing between page sections. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 2.5rem (40px) — spacing between page sections. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8905,7 +8905,7 @@
       "4xl": {
         "$type": "number",
         "$value": "{primitives.size.1200}",
-        "$description": "Spacing 48px — largest spacing between page sections. Use for padding and gaps (auto layout).",
+        "$description": "Spacing 3rem (48px) — largest spacing between page sections. Use for padding and gaps (auto layout).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8926,7 +8926,7 @@
       "2xs": {
         "$type": "number",
         "$value": "{primitives.size.300}",
-        "$description": "Fixed width/height 12px — smallest icons (inline indicators).",
+        "$description": "Fixed width/height 0.75rem (12px) — smallest icons (inline indicators).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8945,7 +8945,7 @@
       "xs": {
         "$type": "number",
         "$value": "{primitives.size.400}",
-        "$description": "Fixed width/height 16px — small icons.",
+        "$description": "Fixed width/height 1rem (16px) — small icons.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8964,7 +8964,7 @@
       "sm": {
         "$type": "number",
         "$value": "{primitives.size.500}",
-        "$description": "Fixed width/height 20px — default icons in dense UI.",
+        "$description": "Fixed width/height 1.25rem (20px) — default icons in dense UI.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -8983,7 +8983,7 @@
       "md": {
         "$type": "number",
         "$value": "{primitives.size.600}",
-        "$description": "Fixed width/height 24px — default icon size.",
+        "$description": "Fixed width/height 1.5rem (24px) — default icon size.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9002,7 +9002,7 @@
       "lg": {
         "$type": "number",
         "$value": "{primitives.size.800}",
-        "$description": "Fixed width/height 32px — small control height and small avatars.",
+        "$description": "Fixed width/height 2rem (32px) — small control height and small avatars.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9021,7 +9021,7 @@
       "xl": {
         "$type": "number",
         "$value": "{primitives.size.900}",
-        "$description": "Fixed width/height 36px — medium control height.",
+        "$description": "Fixed width/height 2.25rem (36px) — medium control height.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9040,7 +9040,7 @@
       "2xl": {
         "$type": "number",
         "$value": "{primitives.size.1000}",
-        "$description": "Fixed width/height 40px — default control height (buttons, inputs).",
+        "$description": "Fixed width/height 2.5rem (40px) — default control height (buttons, inputs).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9059,7 +9059,7 @@
       "3xl": {
         "$type": "number",
         "$value": "{primitives.size.1100}",
-        "$description": "Fixed width/height 44px — minimum touch target.",
+        "$description": "Fixed width/height 2.75rem (44px) — minimum touch target.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9078,7 +9078,7 @@
       "4xl": {
         "$type": "number",
         "$value": "{primitives.size.1200}",
-        "$description": "Fixed width/height 48px — large control height and medium avatars.",
+        "$description": "Fixed width/height 3rem (48px) — large control height and medium avatars.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9097,7 +9097,7 @@
       "5xl": {
         "$type": "number",
         "$value": "{primitives.size.1400}",
-        "$description": "Fixed width/height 56px — extra-large controls.",
+        "$description": "Fixed width/height 3.5rem (56px) — extra-large controls.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9116,7 +9116,7 @@
       "6xl": {
         "$type": "number",
         "$value": "{primitives.size.1600}",
-        "$description": "Fixed width/height 64px — large avatars and thumbnails.",
+        "$description": "Fixed width/height 4rem (64px) — large avatars and thumbnails.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9156,7 +9156,7 @@
       "subtle": {
         "$type": "number",
         "$value": "{primitives.size.100}",
-        "$description": "Subtle rounding (4px). Small controls: buttons, inputs, checkboxes and tags.",
+        "$description": "Subtle rounding (0.25rem, 4px). Small controls: buttons, inputs, checkboxes and tags.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9175,7 +9175,7 @@
       "soft": {
         "$type": "number",
         "$value": "{primitives.size.200}",
-        "$description": "Soft rounding (8px). Cards, dropdown menus and tooltips.",
+        "$description": "Soft rounding (0.5rem, 8px). Cards, dropdown menus and tooltips.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9194,7 +9194,7 @@
       "rounded": {
         "$type": "number",
         "$value": "{primitives.size.400}",
-        "$description": "Rounded (16px). Large containers, panels and bottom sheets.",
+        "$description": "Rounded (1rem, 16px). Large containers, panels and bottom sheets.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9213,7 +9213,7 @@
       "extra-rounded": {
         "$type": "number",
         "$value": "{primitives.size.600}",
-        "$description": "Extra rounded (24px). Overlay components: dialogs and side sheets (with surface/overlay).",
+        "$description": "Extra rounded (1.5rem, 24px). Overlay components: dialogs and side sheets (with surface/overlay).",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9253,7 +9253,7 @@
       "width": {
         "$type": "number",
         "$value": "{primitives.size.50}",
-        "$description": "Width (2px) of the keyboard focus ring. The same for every interactive component; use with the focus-ring colour.",
+        "$description": "Width (0.125rem, 2px) of the keyboard focus ring. The same for every interactive component; use with the focus-ring colour.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -9272,7 +9272,7 @@
       "offset": {
         "$type": "number",
         "$value": "{primitives.size.50}",
-        "$description": "Gap (2px) between a component and its focus ring. Figma can’t bind a variable to position, so in components the ring layer is placed this far outside the component; in code use it as outline-offset.",
+        "$description": "Gap (0.125rem, 2px) between a component and its focus ring. Figma can’t bind a variable to position, so in components the ring layer is placed this far outside the component; in code use it as outline-offset.",
         "$extensions": {
           "com.figma": {
             "collection": "Sizes",
@@ -11469,7 +11469,7 @@
         "height": {
           "$type": "number",
           "$value": "{sizes.dimension.md}",
-          "$description": "Shared by all input components (buttons, text fields, selects, checkboxes, toggles…). Height (24px) of small inputs; square inputs such as icon buttons use it as width too.",
+          "$description": "Shared by all input components (buttons, text fields, selects, checkboxes, toggles…). Height (1.5rem, 24px) of small inputs; square inputs such as icon buttons use it as width too.",
           "$extensions": {
             "com.figma": {
               "collection": "Inputs",
@@ -11547,7 +11547,7 @@
         "height": {
           "$type": "number",
           "$value": "{sizes.dimension.lg}",
-          "$description": "Shared by all input components (buttons, text fields, selects, checkboxes, toggles…). Height (32px) of medium inputs; square inputs such as icon buttons use it as width too.",
+          "$description": "Shared by all input components (buttons, text fields, selects, checkboxes, toggles…). Height (2rem, 32px) of medium inputs; square inputs such as icon buttons use it as width too.",
           "$extensions": {
             "com.figma": {
               "collection": "Inputs",
@@ -11625,7 +11625,7 @@
         "height": {
           "$type": "number",
           "$value": "{sizes.dimension.3xl}",
-          "$description": "Shared by all input components (buttons, text fields, selects, checkboxes, toggles…). Height (44px) of large inputs; square inputs such as icon buttons use it as width too.",
+          "$description": "Shared by all input components (buttons, text fields, selects, checkboxes, toggles…). Height (2.75rem, 44px) of large inputs; square inputs such as icon buttons use it as width too.",
           "$extensions": {
             "com.figma": {
               "collection": "Inputs",

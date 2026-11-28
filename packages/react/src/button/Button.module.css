@@ -42,9 +42,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* State overlay: a separate layer, so the base colour never changes. */
-.button::before {
-  content: '';
+/* State overlay: its own layer (as in Figma), so the base colour never changes. */
+.overlay {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -52,8 +51,28 @@
   pointer-events: none;
 }
 
+/* Label and icons sit above the overlay. */
+.label,
+.icon {
+  position: relative;
+}
+
+/* Focus ring: its own layer outside the border (as in Figma), shown only on keyboard focus. */
+.focusRing {
+  position: absolute;
+  inset: calc((var(--ingrid-focus-ring-offset) + var(--ingrid-focus-ring-width)) * -1);
+  border: var(--ingrid-focus-ring-width) solid var(--ingrid-color-focus-ring);
+  border-radius: calc(var(--ingrid-input-border-radius) + var(--ingrid-focus-ring-offset) + var(--ingrid-focus-ring-width));
+  pointer-events: none;
+  display: none;
+}
+.button[data-focus-visible] .focusRing {
+  display: block;
+}
+
 .icon {
   display: inline-flex;
+  box-sizing: border-box;
   flex: none;
   width: var(--_icon);
   height: var(--_icon);
@@ -138,8 +157,6 @@
 /* ---- States (later rules win: focus < hover < pressed) --------------------------------- */
 .button[data-focus-visible] {
   --_overlay: var(--_focus);
-  outline: var(--ingrid-focus-ring-width) solid var(--ingrid-color-focus-ring);
-  outline-offset: var(--ingrid-focus-ring-offset);
 }
 .button[data-hovered] {
   --_overlay: var(--_hover);

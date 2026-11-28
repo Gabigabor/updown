@@ -1,5 +1,8 @@
 import type { Preview } from '@storybook/react-vite';
+import { Controls, Description, Primary, Stories, Subtitle, Title } from '@storybook/addon-docs/blocks';
 import { withTokenInspector } from './token-inspector/decorator';
+import { withContract } from './contract/decorator';
+import { ContractSection } from './contract/ContractSection';
 import '@updown/tokens/tokens.css';
 import '@updown/tokens/text-styles.css';
 
@@ -21,6 +24,8 @@ const preview: Preview = {
   decorators: [
     // Feeds the Tokens tab on stories that set parameters.tokenInspector (inside the theme wrapper).
     withTokenInspector,
+    // Feeds the Contract tab on stories whose meta sets parameters.contract.
+    withContract,
     (Story, { globals, viewMode }) => {
       // On a story page the whole canvas takes the theme, so Dark mode is dark edge to edge.
       // On Docs pages only the example boxes do, so the page text stays readable.
@@ -43,6 +48,20 @@ const preview: Preview = {
     },
   ],
   parameters: {
+    // Docs page: the default blocks, plus the component's contract under the property table.
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Controls />
+          <ContractSection />
+          <Stories />
+        </>
+      ),
+    },
     // Accessibility violations fail story tests (when the Vitest addon is added).
     a11y: { test: 'error' },
   },

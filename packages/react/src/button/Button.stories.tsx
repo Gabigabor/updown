@@ -104,6 +104,12 @@ const meta = {
     },
     // Tokens tab next to Controls: which token is behind each property of the button.
     tokenInspector: { selector: 'button[data-appearance]' },
+    // Contract section on the Docs page and the Contract tab next to Controls.
+    contract,
+    contractDocs: {
+      selector: 'button[data-appearance]',
+      anatomy: { children: 'Button', showLeadingIcon: true, showTrailingIcon: true },
+    },
     controls: {
       include: ['Label', appearance.figma, variant.figma, size.figma, 'Leading icon', 'Trailing icon', 'Disabled'],
     },

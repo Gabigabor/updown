@@ -13,7 +13,8 @@ Use `packages/react/src/button/` as the reference for every file.
 
 1. **Category collection.** List the category collections in `packages/tokens/src/ingrid.tokens.json`
    (today: `inputs`) and ask which one the component belongs to, or whether it needs a new one.
-2. **Anatomy:** named parts (container, label, icons, indicator, helper text…). These become Figma layer names.
+2. **Anatomy:** named parts (container, label, icons, indicator, helper text, state overlay, focus ring…).
+   These become Figma layer names, and each is a real element marked `data-part="<name>"`.
 3. **Variant props.** Reuse Ingrid's names where they fit: `appearance` (filled, outlined, text),
    `variant` (primary, neutral, destructive, inverse), `size` (small, medium, large).
 4. **States:** default, hovered, pressed, focused, disabled (plus selected, invalid… if needed).
@@ -34,17 +35,23 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
    `"$schema": "../../../contracts/contract.schema.json"` so the editor checks it, and keep the
    layout of `Button.contract.json` (short lists and each token binding on one line). Every
    binding uses `when` to say which combinations it applies to. Only category tokens, text styles and the shared `colors/focus-ring`,
-   `sizes/focus-ring/width` and `sizes/focus-ring/offset` are allowed. Run `pnpm contracts`:
+   `sizes/focus-ring/width` and `sizes/focus-ring/offset` are allowed. Write the usage rules
+   as objects: `{"text": "…", "example": [{…props, "children": "Label"}]}`; the example is
+   drawn live on the Docs page (a rule may have no example; `"background": "surface"` keeps a
+   locked combination, e.g. inverse, off its dark background for a Don't). Run `pnpm contracts`:
    it validates the file and generates `<Name>.contract.d.json.ts` (commit it, never edit it).
 2. **`<Name>.tsx`**: wraps the React Aria component. Prop types and defaults come from the
    contract (`import contract from './<Name>.contract.json'`,
    `PropValue<typeof contract, 'size'>`, `contract.props.size.default`). Props
    reach CSS as `data-*` attributes; React Aria adds `data-hovered`, `data-pressed`,
    `data-focus-visible`, `data-disabled`. The label gets the text-style class from
-   `textStyles` in `@updown/tokens`. Inverse variants set `data-theme="light"`.
+   `textStyles` in `@updown/tokens`. Inverse variants set `data-theme="light"`. Every anatomy
+   part is a real element with `data-part="<name>"` (the root is `container`; the state overlay
+   and focus ring are their own spans, like the Figma layers); `pnpm contracts` checks this.
 3. **`<Name>.module.css`**: only `var(--ingrid-…)` tokens that the contract lists, and every
-   one of them. No raw values. State overlays on a `::before` layer, focus ring as an outline
-   outside the border, disabled through the disabled tokens (never opacity).
+   one of them. No raw values. The state overlay is a layer covering the container, the focus
+   ring a layer outside the border shown on `[data-focus-visible]`, disabled uses the disabled
+   tokens (never opacity).
 4. **`<Name>.stories.tsx`**, laid out like `Button.stories.tsx`:
    - meta with `tags: ['autodocs']`, so the Docs page (live example, Show code, property
      table) is the component's main page;
@@ -52,6 +59,9 @@ fits. Missing ones go through the `ds-add-token` skill. Show the plan and wait f
      plus Label, icon switches and Disabled, listed in `parameters.controls.include`;
      descriptions from the contract, ending with ``Prop: `name`.``;
    - `parameters.tokenInspector.selector` set to the component's root, for the Tokens tab;
+   - `parameters.contract` (the imported contract JSON) and `parameters.contractDocs`
+     (`selector`: the root; `anatomy`: props for the anatomy drawing, with every optional part
+     switched on). These turn on the Contract section of the Docs page and the Contract tab;
    - an inverse decorator that puts inverse variants on `surface/inverse` in Light mode;
    - `Playground` with `tags: ['!dev']` (shown on the Docs page only);
    - one story per appearance (`Filled`, `Outlined`, `Text`), each a single component set

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useChannel } from 'storybook/manager-api';
 import { useTheme } from 'storybook/theming';
+import { withPx } from '../units';
 import { GROUPS, REQUEST_EVENT, RESULT_EVENT, type TokenResult } from './shared';
 
 const checker = 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 10px 10px';
@@ -107,7 +108,7 @@ export function TokensPanel() {
                       <div key={t.name}>{t.pointsTo.length ? t.pointsTo.join(' → ') : '—'}</div>
                     ))}
                   </td>
-                  <td style={{ ...cell, ...mono }}>{r.resolved}</td>
+                  <td style={{ ...cell, ...mono }}>{withPx(r.resolved)}</td>
                 </tr>
               ))}
             </tbody>

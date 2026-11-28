@@ -8,6 +8,7 @@
     "build": "storybook build -o ../../storybook-static"
   },
   "dependencies": {
+    "@updown/contracts": "workspace:*",
     "@updown/react": "workspace:*",
     "@updown/tokens": "workspace:*",
     "react": "^19.0.0",

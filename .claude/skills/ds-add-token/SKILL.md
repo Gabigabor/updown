@@ -23,7 +23,7 @@ The rules are the Ingrid taxonomy: https://github.com/Gabigabor/InGrid/blob/main
 
 | Need | Tier | Collection |
 | --- | --- | --- |
-| A raw value that doesn't exist yet | 1 | `primitives` (size steps follow px × 25; no alpha colours) |
+| A raw value that doesn't exist yet | 1 | `primitives` (size steps follow px × 25; no alpha colours). Write sizes in px: the build turns them into rem (16px = 1rem). |
 | A new role (e.g. a new surface) | 2 | `colors`, `sizes`, `opacity` or `typography` |
 | Something shared by a family of components | 3 | its category collection (`inputs`, …) |
 
@@ -57,7 +57,8 @@ Place it in the existing group order. Shape (example from Inputs):
   `color/` and `size/` dropped). It must be unique. Never change an existing one without asking:
   it is a breaking change for code.
 - **scopes:** from the taxonomy's scope table; primitives get `[]`; never `ALL_SCOPES`.
-- **description:** where to use it and what it pairs with. Use ’ instead of '.
+- **description:** where to use it and what it pairs with. Write sizes as rem with px, e.g.
+  `0.5rem (8px)`. Use ’ instead of '.
 - Translucent colours: `{"color": "{primitives.color.black}", "opacity": "{primitives.opacity.5}"}`.
 
 ## 4. Build and check

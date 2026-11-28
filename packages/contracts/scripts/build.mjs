@@ -9,7 +9,9 @@
 //   3. only the category collection, text styles and the shared focus-ring tokens are used;
 //   4. every binding applies to at least one combination (no dead bindings);
 //   5. <Name>.module.css uses exactly the --ingrid- tokens the contract lists, no more, no less;
-//   6. <Name>.stories.tsx exists, exports Playground and has the contract's title.
+//   6. <Name>.stories.tsx exists, exports Playground and has the contract's title;
+//   7. every anatomy part is marked with data-part="<part>" in <Name>.tsx, and every rule
+//      example uses valid values for the contract's variant props.
 //
 // It also writes <Name>.contract.d.json.ts: the contract's exact literal types, so that
 // `import contract from './Button.contract.json'` gives 'filled' | 'outlined' | 'text'
@@ -163,6 +165,27 @@ for (const file of files.sort()) {
     const inCss = new Set([...css.matchAll(/var\((--ingrid-[a-z0-9-]+)/g)].map((m) => m[1]));
     for (const v of inCss) if (!resolved.has(v)) err(`${name}.module.css uses ${v}, which the contract does not list`);
     for (const v of resolved.keys()) if (!inCss.has(v)) err(`contract lists ${v} (${resolved.get(v)}), but ${name}.module.css never uses it`);
+  }
+
+  // 7. anatomy marked in the component; rule examples valid
+  const tsxFile = path.join(dir, `${name}.tsx`);
+  if (!fs.existsSync(tsxFile)) err(`missing ${name}.tsx`);
+  else {
+    const tsx = fs.readFileSync(tsxFile, 'utf8');
+    for (const part of contract.anatomy) {
+      if (!tsx.includes(`data-part="${part}"`)) err(`anatomy part "${part}" is not marked with data-part="${part}" in ${name}.tsx`);
+    }
+  }
+  for (const kind of ['do', 'dont']) {
+    contract.rules[kind].forEach((rule, i) => {
+      if (typeof rule !== 'object' || !rule.text) { err(`rules.${kind}[${i}] needs a "text"`); return; }
+      (rule.example ?? []).forEach((props, j) => {
+        for (const [prop, value] of Object.entries(props)) {
+          const def = contract.props[prop];
+          if (def && !def.values.includes(value)) err(`rules.${kind}[${i}].example[${j}].${prop} is "${value}", not one of ${def.values.join(', ')}`);
+        }
+      });
+    });
   }
 
   // 6. stories
