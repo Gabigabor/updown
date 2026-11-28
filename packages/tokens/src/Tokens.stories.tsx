@@ -3,7 +3,8 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { tokens, textStyles } from '../dist/tokens.js';
-import { declared } from '../../../apps/storybook/.storybook/tokens-css';
+import { aliasRefs, rawValue } from '../../../apps/storybook/.storybook/tokens-css';
+import { TokenValueView } from '../../../apps/storybook/.storybook/token-value';
 import { withPx } from '../../../apps/storybook/.storybook/units';
 
 const PREFIX = '--ingrid-';
@@ -20,49 +21,11 @@ const allTokens: Token[] = Object.entries(tokens).map(([path, ref]) => {
   };
 });
 
-const pathByCss = new Map(allTokens.map((t) => [t.cssVar, t.path]));
-const collectionLabel = (key: string) => key.charAt(0).toUpperCase() + key.slice(1);
 type Mode = 'light' | 'dark';
-
-/** The final raw value behind a variable in one mode, following every alias. */
-function rawValue(cssVar: string, mode: Mode, depth = 0): string {
-  const value = declared[mode].get(cssVar) ?? declared.light.get(cssVar);
-  if (!value || depth > 10) return '';
-  const alias = value.match(/^var\((--ingrid-[\w-]+)\)$/)?.[1];
-  if (alias) return rawValue(alias, mode, depth + 1);
-  // Colour + opacity (translucent colours): "#000000 at 5%".
-  const refs = [...value.matchAll(/var\((--ingrid-[\w-]+)\)/g)].map((m) => m[1] ?? '');
-  if (value.startsWith('color-mix') && refs.length === 2) {
-    const opacity = Number(rawValue(refs[1] ?? '', mode, depth + 1));
-    return `${rawValue(refs[0] ?? '', mode, depth + 1)} at ${Math.round(opacity * 100)}%`;
-  }
-  return value;
-}
 
 /** Value cell: the alias as its Figma variable name, the raw value under it. Primitives: raw only. */
 function TokenValue({ cssVar, mode }: { cssVar: string; mode: Mode }) {
-  const value = declared[mode].get(cssVar) ?? declared.light.get(cssVar) ?? '';
-  const refs = [...value.matchAll(/var\((--ingrid-[\w-]+)\)/g)].map((m) => m[1] ?? '');
-  const raw = withPx(rawValue(cssVar, mode));
-  const mono: React.CSSProperties = { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 12 };
-  if (!refs.length) return <span style={mono}>{raw}</span>;
-  return (
-    <div style={{ display: 'grid', gap: 2 }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'baseline' }}>
-        {refs.map((ref, i) => {
-          const [collection = '', ...rest] = (pathByCss.get(ref) ?? ref).split('.');
-          return (
-            <span key={ref} style={{ display: 'inline-flex', gap: 4, alignItems: 'baseline' }}>
-              {i > 0 && <span style={{ color: text.subtle }}>+</span>}
-              <span style={{ fontSize: 11, color: text.subtle }}>{collectionLabel(collection)}</span>
-              <span style={{ ...mono, fontWeight: 600 }}>{rest.join('/')}</span>
-            </span>
-          );
-        })}
-      </div>
-      <span style={{ ...mono, fontSize: 11, color: text.subtle }}>{raw}</span>
-    </div>
-  );
+  return <TokenValueView alias={aliasRefs(cssVar, mode)} raw={rawValue(cssVar, mode)} subtle={text.subtle} />;
 }
 
 const text = {

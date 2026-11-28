@@ -7,6 +7,7 @@ import { addons } from 'storybook/preview-api';
 import { textStyles } from '@updown/tokens';
 import contractsData from '../../../../packages/contracts/dist/contracts.json';
 import { winningDeclarations } from '../token-inspector/decorator';
+import { aliasRefs, rawValue, type Theme } from '../tokens-css';
 import { REQUEST_EVENT, RESULT_EVENT, axisName, comboFrom, hasContract, type Contract, type ContractParameters, type ContractResult, type ContractRow } from './shared';
 
 type Binding = { part: string; property: string; token?: string; css?: string; textStyle?: string };
@@ -50,12 +51,15 @@ function check(el: Element, c: Contract, args: Record<string, unknown>, theme: s
     }
     const css = b.css ?? '';
     const resolved = style.getPropertyValue(css).trim();
+    const mode: Theme = theme === 'dark' ? 'dark' : 'light';
     return {
       part: b.part,
       property: b.property,
       token: b.token ?? '',
       css,
       resolved,
+      alias: aliasRefs(css, mode),
+      raw: rawValue(css, mode),
       isColour: !!resolved && !/^-?[\d.]+(px|rem)?$/.test(resolved) && CSS.supports('color', resolved),
       ok: parts.has(b.part) ? used.has(css) : null,
     };

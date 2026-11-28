@@ -37,3 +37,34 @@ export function aliasChain(cssVar: string, theme: Theme): string[] {
   }
   return chain;
 }
+
+// ---- alias and raw value (shared by the Tokens pages, the Tokens tab and the Contract tab) ----
+import { tokens } from '../../../packages/tokens/dist/tokens.js';
+import type { AliasRef } from './token-value';
+
+const pathByCss = new Map(Object.entries(tokens).map(([path, ref]) => [ref.slice(4, -1), path]));
+const collectionLabel = (key: string) => key.charAt(0).toUpperCase() + key.slice(1);
+
+/** What a variable aliases in one mode, as Figma variable names (two for colour + opacity). */
+export function aliasRefs(cssVar: string, theme: Theme): AliasRef[] {
+  const value = declared[theme].get(cssVar) ?? declared.light.get(cssVar) ?? '';
+  return [...value.matchAll(/var\((--ingrid-[\w-]+)\)/g)].map((m) => {
+    const [collection = '', ...rest] = (pathByCss.get(m[1] ?? '') ?? m[1] ?? '').split('.');
+    return { collection: collectionLabel(collection), name: rest.join('/') };
+  });
+}
+
+/** The final raw value behind a variable in one mode, following every alias. */
+export function rawValue(cssVar: string, theme: Theme, depth = 0): string {
+  const value = declared[theme].get(cssVar) ?? declared.light.get(cssVar);
+  if (!value || depth > 10) return '';
+  const alias = value.match(/^var\((--ingrid-[\w-]+)\)$/)?.[1];
+  if (alias) return rawValue(alias, theme, depth + 1);
+  // Colour + opacity (translucent colours): "#000000 at 5%".
+  const refs = [...value.matchAll(/var\((--ingrid-[\w-]+)\)/g)].map((m) => m[1] ?? '');
+  if (value.startsWith('color-mix') && refs.length === 2) {
+    const opacity = Number(rawValue(refs[1] ?? '', theme, depth + 1));
+    return `${rawValue(refs[0] ?? '', theme, depth + 1)} at ${Math.round(opacity * 100)}%`;
+  }
+  return value;
+}

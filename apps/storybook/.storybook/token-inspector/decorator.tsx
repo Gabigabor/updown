@@ -7,7 +7,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import type { Decorator } from '@storybook/react-vite';
 import { addons } from 'storybook/preview-api';
-import { aliasChain, shortValue, type Theme } from '../tokens-css';
+import { aliasChain, aliasRefs, rawValue, shortValue, type Theme } from '../tokens-css';
 import {
   REQUEST_EVENT,
   RESULT_EVENT,
@@ -114,7 +114,12 @@ function inspect(el: Element, theme: Theme): TokenResult {
     rows.push({
       label: label(d.prop),
       prop: d.prop,
-      tokens: names.map((name) => ({ name, pointsTo: aliasChain(name, theme).map((c) => shortValue(`var(${c})`)) })),
+      tokens: names.map((name) => ({
+        name,
+        pointsTo: aliasChain(name, theme).map((c) => shortValue(`var(${c})`)),
+        alias: aliasRefs(name, theme),
+        raw: rawValue(name, theme),
+      })),
       value: d.value,
       resolved,
       isColour: colour,

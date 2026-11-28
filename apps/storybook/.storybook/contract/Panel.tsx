@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useChannel } from 'storybook/manager-api';
 import { useTheme } from 'storybook/theming';
-import { withPx } from '../units';
+import { TokenValueView } from '../token-value';
 import { REQUEST_EVENT, RESULT_EVENT, type ContractResult } from './shared';
 
 const checker = 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 10px 10px';
@@ -72,13 +72,15 @@ export function ContractPanel() {
                 {r.css && <div style={{ ...mono, fontSize: 11, color: muted }}>{r.token}</div>}
               </td>
               <td style={cell}>
-                {r.isColour ? (
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ width: 16, height: 16, borderRadius: 4, border: `1px solid ${rule}`, background: `linear-gradient(${r.resolved}, ${r.resolved}), ${checker}` }} />
-                    <span style={mono}>{r.resolved}</span>
-                  </span>
+                {r.textStyle ? (
+                  <span style={{ ...mono, color: muted }}>text style class</span>
                 ) : (
-                  <span style={mono}>{withPx(r.resolved) || (r.textStyle ? 'text style class' : '')}</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 8 }}>
+                    {r.isColour && (
+                      <span style={{ flex: 'none', marginTop: 2, width: 16, height: 16, borderRadius: 4, border: `1px solid ${rule}`, background: `linear-gradient(${r.resolved}, ${r.resolved}), ${checker}` }} />
+                    )}
+                    <TokenValueView alias={r.alias ?? []} raw={r.raw || r.resolved || ''} subtle={muted} />
+                  </span>
                 )}
               </td>
               <td style={{ ...cell, fontWeight: 700, color: r.ok === null ? muted : r.ok ? good : bad }} title={r.ok === null ? 'This part isn’t rendered in this story' : r.ok ? 'Used by the CSS' : 'Not used by the CSS'}>

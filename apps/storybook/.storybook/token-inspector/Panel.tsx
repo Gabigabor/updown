@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useChannel } from 'storybook/manager-api';
 import { useTheme } from 'storybook/theming';
 import { withPx } from '../units';
+import { TokenValueView } from '../token-value';
 import { GROUPS, REQUEST_EVENT, RESULT_EVENT, type TokenResult } from './shared';
 
 const checker = 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 10px 10px';
@@ -48,8 +49,7 @@ export function TokensPanel() {
             <th style={{ ...head, width: 40 }} />
             <th style={head}>Property</th>
             <th style={head}>Token</th>
-            <th style={head}>Points to ({data.theme})</th>
-            <th style={head}>Value</th>
+            <th style={head}>Value ({data.theme})</th>
           </tr>
         </thead>
         {GROUPS.map((group) => {
@@ -58,7 +58,7 @@ export function TokensPanel() {
           return (
             <tbody key={group}>
               <tr>
-                <td colSpan={5} style={{ ...cell, fontWeight: 700, paddingTop: 14, borderTop: 'none' }}>
+                <td colSpan={4} style={{ ...cell, fontWeight: 700, paddingTop: 14, borderTop: 'none' }}>
                   {group}
                 </td>
               </tr>
@@ -103,12 +103,17 @@ export function TokensPanel() {
                       <span style={{ color: muted }}>{r.value} (no token)</span>
                     )}
                   </td>
-                  <td style={{ ...cell, ...mono, color: muted }}>
-                    {r.tokens.map((t) => (
-                      <div key={t.name}>{t.pointsTo.length ? t.pointsTo.join(' → ') : '—'}</div>
-                    ))}
+                  <td style={cell}>
+                    {r.tokens.length ? (
+                      <div style={{ display: 'grid', gap: 6 }}>
+                        {r.tokens.map((t) => (
+                          <TokenValueView key={t.name} alias={t.alias} raw={t.raw || r.resolved} subtle={muted} />
+                        ))}
+                      </div>
+                    ) : (
+                      <span style={mono}>{withPx(r.resolved)}</span>
+                    )}
                   </td>
-                  <td style={{ ...cell, ...mono }}>{withPx(r.resolved)}</td>
                 </tr>
               ))}
             </tbody>

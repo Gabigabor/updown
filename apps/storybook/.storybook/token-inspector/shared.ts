@@ -1,4 +1,5 @@
 // Shared between the story side (which reads the tokens) and the "Tokens" tab (which shows them).
+import type { AliasRef } from '../token-value';
 
 export const ADDON_ID = 'ingrid/token-inspector';
 export const PANEL_ID = `${ADDON_ID}/panel`;
@@ -19,8 +20,11 @@ export const GROUPS = ['Colour', 'States', 'Size & spacing', 'Typography'] as co
 export type TokenRow = {
   label: string;
   prop: string;
-  /** var(--ingrid-…) names in the winning declaration, each with its alias chain in the current mode. */
-  tokens: { name: string; pointsTo: string[] }[];
+  /**
+   * var(--ingrid-…) names in the winning declaration, each with its alias chain, what it
+   * aliases (as Figma variable names) and the final raw value, in the current mode.
+   */
+  tokens: { name: string; pointsTo: string[]; alias: AliasRef[]; raw: string }[];
   /** The declaration as written, shown when no token is used (e.g. "transparent"). */
   value: string;
   resolved: string;

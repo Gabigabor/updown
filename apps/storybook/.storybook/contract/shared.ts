@@ -1,6 +1,7 @@
 // Shared by the Docs page section (ContractSection.tsx), the story side of the "Contract" tab
 // (decorator.tsx) and the tab itself (Panel.tsx). No React, no DOM: plain contract logic.
 import type { Contract, ContractRule } from '@updown/contracts';
+import type { AliasRef } from '../token-value';
 
 export type { Contract, ContractRule };
 
@@ -74,6 +75,9 @@ export type ContractRow = {
   textStyle?: string;
   /** Value in the current mode, when the component is on screen. */
   resolved?: string;
+  /** What the token aliases (Figma variable names) and its final raw value, in the current mode. */
+  alias?: AliasRef[];
+  raw?: string;
   isColour?: boolean;
   /** true: the rendered component uses it; false: it doesn't; null: can't tell (part not rendered). */
   ok: boolean | null;
