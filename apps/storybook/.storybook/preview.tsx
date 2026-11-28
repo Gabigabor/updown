@@ -21,14 +21,26 @@ const preview: Preview = {
   decorators: [
     // Feeds the Tokens tab on stories that set parameters.tokenInspector (inside the theme wrapper).
     withTokenInspector,
-    (Story, { globals }) => (
-      <div
-        data-theme={globals.theme}
-        style={{ background: 'var(--ingrid-color-surface-default)', padding: 'var(--ingrid-spacing-lg)', minHeight: '100%' }}
-      >
-        <Story />
-      </div>
-    ),
+    (Story, { globals, viewMode }) => {
+      // On a story page the whole canvas takes the theme, so Dark mode is dark edge to edge.
+      // On Docs pages only the example boxes do, so the page text stays readable.
+      const root = document.documentElement;
+      if (viewMode === 'story') {
+        root.setAttribute('data-theme', globals.theme);
+        document.body.style.background = 'var(--ingrid-color-surface-default)';
+      } else {
+        root.removeAttribute('data-theme');
+        document.body.style.background = '';
+      }
+      return (
+        <div
+          data-theme={globals.theme}
+          style={{ background: 'var(--ingrid-color-surface-default)', padding: 'var(--ingrid-spacing-lg)' }}
+        >
+          <Story />
+        </div>
+      );
+    },
   ],
   parameters: {
     // Accessibility violations fail story tests (when the Vitest addon is added).
