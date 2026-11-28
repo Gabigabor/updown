@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 import { Button } from './Button.tsx';
-import contract from './Button.contract.ts';
+import contract from './Button.contract.json';
 
 const { appearance, variant, size } = contract.props;
 
@@ -99,7 +99,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: `${contract.description} Every colour and size comes from the Inputs tokens; the full specification is \`Button.contract.ts\`.`,
+        component: `${contract.description} Every colour and size comes from the Inputs tokens; the full specification is \`Button.contract.json\`.`,
       },
     },
     // Tokens tab next to Controls: which token is behind each property of the button.

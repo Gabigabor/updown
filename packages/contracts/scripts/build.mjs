@@ -1,7 +1,9 @@
-// Validates every component contract and writes dist/contracts.json.
+// Validates every component contract, writes dist/contracts.json and generates the type
+// file next to each contract.
 //
-// For each packages/react/src/**/<Name>.contract.ts it checks that:
-//   1. the contract has every required field, and each prop default is one of its values;
+// For each packages/react/src/**/<Name>.contract.json it checks that:
+//   1. the contract is valid JSON with every required field and no unknown ones
+//      (contract.schema.json describes them), and each prop default is one of its values;
 //   2. for every combination of props × states, each token binding that applies resolves to
 //      a real token (or text style), and no part/property gets two different tokens;
 //   3. only the category collection, text styles and the shared focus-ring tokens are used;
@@ -9,12 +11,14 @@
 //   5. <Name>.module.css uses exactly the --ingrid- tokens the contract lists, no more, no less;
 //   6. <Name>.stories.tsx exists, exports Playground and has the contract's title.
 //
-// Contracts are TypeScript files loaded directly by Node (type stripping, Node ≥ 22.18).
+// It also writes <Name>.contract.d.json.ts: the contract's exact literal types, so that
+// `import contract from './Button.contract.json'` gives 'filled' | 'outlined' | 'text'
+// instead of string. The file is generated; CI fails if it is out of date.
 // No dependencies: `node packages/contracts/scripts/build.mjs`.
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../../..');
@@ -46,7 +50,7 @@ const find = (dir) => {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) find(p);
-    else if (e.name.endsWith('.contract.ts')) files.push(p);
+    else if (e.name.endsWith('.contract.json')) files.push(p);
   }
 };
 find(COMPONENTS);
@@ -67,27 +71,49 @@ const fill = (template, combo, contract) =>
     return k === 'state' ? (contract.stateTokenNames?.[v] ?? v) : v;
   });
 
+const KNOWN = new Set(Object.keys(JSON.parse(fs.readFileSync(path.resolve(here, '../contract.schema.json'), 'utf8')).properties));
+
+// Literal TypeScript type of a JSON value, readonly all the way down.
+const typeOf = (v, indent = 0) => {
+  const pad = '  '.repeat(indent);
+  if (Array.isArray(v)) return `readonly [${v.map((x) => typeOf(x, indent)).join(', ')}]`;
+  if (v && typeof v === 'object') {
+    const body = Object.entries(v).map(([k, x]) => `${pad}  readonly ${JSON.stringify(k)}: ${typeOf(x, indent + 1)};`).join('\n');
+    return `{\n${body}\n${pad}}`;
+  }
+  return JSON.stringify(v);
+};
+const typeFile = (name, contract) => {
+  const { $schema, ...rest } = contract;
+  return `// Generated from ${name}.contract.json by packages/contracts/scripts/build.mjs. Do not edit.
+// Gives the JSON import its exact literal types (TypeScript allowArbitraryExtensions).
+declare const contract: ${typeOf(rest)};
+export default contract;
+`;
+};
+
 const problems = [];
 const out = [];
 
 for (const file of files.sort()) {
   const rel = path.relative(repo, file);
-  const name = path.basename(file, '.contract.ts');
+  const name = path.basename(file, '.contract.json');
   const dir = path.dirname(file);
   const err = (m) => problems.push(`${rel}: ${m}`);
   let contract;
   try {
-    contract = (await import(pathToFileURL(file).href)).default;
+    contract = JSON.parse(fs.readFileSync(file, 'utf8'));
   } catch (e) {
-    err(`cannot load: ${e.message}`);
+    err(`not valid JSON: ${e.message}`);
     continue;
   }
+  for (const key of Object.keys(contract)) if (!KNOWN.has(key)) err(`unknown field "${key}"`);
 
   // 1. shape
-  for (const key of ['name', 'status', 'description', 'category', 'anatomy', 'props', 'states', 'tokens', 'a11y', 'rules', 'figma', 'storybook']) {
-    if (contract?.[key] === undefined) err(`missing "${key}"`);
-  }
-  if (problems.some((p) => p.startsWith(rel))) continue;
+  const missing = ['name', 'status', 'description', 'category', 'anatomy', 'props', 'states', 'tokens', 'a11y', 'rules', 'figma', 'storybook']
+    .filter((key) => contract?.[key] === undefined);
+  for (const key of missing) err(`missing "${key}"`);
+  if (missing.length) continue;
   if (contract.name !== name) err(`name "${contract.name}" does not match the file name "${name}"`);
   if (!['alpha', 'beta', 'stable', 'deprecated'].includes(contract.status)) err(`unknown status "${contract.status}"`);
   if (!collectionKeys.has(contract.category)) err(`category "${contract.category}" is not a token collection`);
@@ -152,7 +178,12 @@ for (const file of files.sort()) {
     if (title !== contract.storybook.title) err(`${name}.stories.tsx title is ${title ? `"${title}"` : 'not a string literal'}; the contract says "${contract.storybook.title}"`);
   }
 
-  out.push({ ...contract, source: rel, combinations: cells.length, resolvedTokens: Object.fromEntries(resolved), matrix: cells });
+  const typesPath = path.join(dir, `${name}.contract.d.json.ts`);
+  const types = typeFile(name, contract);
+  if (!fs.existsSync(typesPath) || fs.readFileSync(typesPath, 'utf8') !== types) fs.writeFileSync(typesPath, types);
+
+  const { $schema, ...data } = contract;
+  out.push({ ...data, source: rel, combinations: cells.length, resolvedTokens: Object.fromEntries(resolved), matrix: cells });
 }
 
 if (problems.length) {
@@ -160,5 +191,5 @@ if (problems.length) {
   process.exit(1);
 }
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, JSON.stringify({ generatedFrom: 'packages/react/src/**/*.contract.ts', contracts: out }, null, 2) + '\n');
+fs.writeFileSync(OUT, JSON.stringify({ generatedFrom: 'packages/react/src/**/*.contract.json', contracts: out }, null, 2) + '\n');
 console.log(`${out.length} contract(s) valid: ${out.map((c) => `${c.name} (${c.combinations} combinations, ${Object.keys(c.resolvedTokens).length} tokens)`).join(', ')}. Wrote ${path.relative(process.cwd(), OUT)}`);
