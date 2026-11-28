@@ -25,6 +25,13 @@ Never treat Figma as an input: a difference between Figma and code is drift to f
 - Figma is on the Professional plan: no Variables REST API, no Code Connect. Figma writes go
   through the Plugin API only.
 
+## After every change: ask about a pull request
+
+When a change is done and the checks pass, commit it on a branch, then **ask the user whether
+to open a pull request**. Don't open one, and don't push to an existing PR's branch, until they
+say yes. Ask in the user's language (they currently write in Hungarian), e.g.
+"Elkészült, a checkek zöldek. Nyissak PR-t?"
+
 ## Commands
 
 ```sh

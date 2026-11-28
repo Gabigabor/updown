@@ -73,3 +73,7 @@ are whole.
 
 Report: files created, new tokens (if any), check results, and anything left open. Don't
 touch Figma from this skill; that is `ds-sync-figma`'s job (Phase 3).
+
+Then commit the change on a branch and **ask the user whether to open a pull request**
+(in their language, e.g. "Elkészült, a checkek zöldek. Nyissak PR-t?"). Don't open a PR,
+or push to an existing PR's branch, until they say yes.
