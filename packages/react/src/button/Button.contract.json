@@ -22,7 +22,7 @@
       "values": ["small", "medium", "large"],
       "default": "medium",
       "figma": "Size",
-      "description": "Height: Small 24 px, Medium 32 px, Large 44 px."
+      "description": "Height: Small 1.5rem (24px), Medium 2rem (32px), Large 2.75rem (44px)."
     }
   },
   "states": ["default", "hovered", "pressed", "focused", "disabled"],

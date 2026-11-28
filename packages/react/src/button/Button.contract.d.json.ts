@@ -23,7 +23,7 @@ declare const contract: {
       readonly "values": readonly ["small", "medium", "large"];
       readonly "default": "medium";
       readonly "figma": "Size";
-      readonly "description": "Height: Small 24 px, Medium 32 px, Large 44 px.";
+      readonly "description": "Height: Small 1.5rem (24px), Medium 2rem (32px), Large 2.75rem (44px).";
     };
   };
   readonly "states": readonly ["default", "hovered", "pressed", "focused", "disabled"];

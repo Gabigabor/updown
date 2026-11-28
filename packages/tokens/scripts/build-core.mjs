@@ -56,10 +56,13 @@ export function buildTokenFiles(doc) {
 
   // ---- value formatting ---------------------------------------------------------------------
   // Primitives carry the units; everything above them is var() references, so units flow through.
+  // Sizes and letter spacing are px in the JSON (Figma works in px) and rem in CSS, so they
+  // follow the reader's browser font size: 16px = 1rem.
+  const REM_BASE = 16;
   const unitFor = (t) => {
     if (t.path.includes('opacity')) return 'ratio';      // Figma 0–100  ->  CSS 0–1
     if (t.path.includes('font-weight')) return 'none';
-    return 'px';
+    return 'rem';
   };
   const literal = (t, value) => {
     switch (t.$type) {
@@ -68,7 +71,7 @@ export function buildTokenFiles(doc) {
         const unit = unitFor(t);
         if (unit === 'ratio') return String(Math.round((value / 100) * 10000) / 10000);
         if (unit === 'none') return String(value);
-        return value === 0 ? '0' : `${value}px`;
+        return value === 0 ? '0' : `${Math.round((value / REM_BASE) * 100000) / 100000}rem`;
       }
       case 'string': return t.path.includes('font-family') ? `"${value}", sans-serif` : JSON.stringify(value);
       case 'boolean': return value ? '1' : '0';

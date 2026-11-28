@@ -4,6 +4,7 @@ import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { tokens, textStyles } from '../dist/tokens.js';
 import { declared, shortValue } from '../../../apps/storybook/.storybook/tokens-css';
+import { withPx } from '../../../apps/storybook/.storybook/units';
 
 const PREFIX = '--ingrid-';
 
@@ -47,10 +48,10 @@ function Preview({ token, value }: { token: Token; value: string }) {
   if (n.includes('opacity') && /^[\d.]+$/.test(value)) {
     return <div style={{ ...box, background: text.default, opacity: v as never }} />;
   }
-  if (n.includes('radius') && value.endsWith('px')) {
+  if (n.includes('radius') && /(px|rem)$/.test(value)) {
     return <div style={{ ...box, borderRadius: `min(${v}, 20px)`, border: `2px solid ${text.subtle}` }} />;
   }
-  if (/^-?[\d.]+px$/.test(value)) {
+  if (/^-?[\d.]+(px|rem)$/.test(value)) {
     return (
       <div
         style={{ height: 12, width: `min(${v}, 240px)`, minWidth: 1, background: 'var(--ingrid-color-primary-default)', borderRadius: 2 }}
@@ -147,13 +148,13 @@ function TokenTable({ collection, theme, modes }: { collection: string; theme: s
                       </td>
                       {modes ? (
                         <>
-                          <td style={{ ...cell, ...mono, fontWeight: theme === 'light' ? 600 : 400 }}>{shortValue(light)}</td>
-                          <td style={{ ...cell, ...mono, fontWeight: theme === 'dark' ? 600 : 400 }}>{shortValue(dark)}</td>
+                          <td style={{ ...cell, ...mono, fontWeight: theme === 'light' ? 600 : 400 }}>{withPx(shortValue(light))}</td>
+                          <td style={{ ...cell, ...mono, fontWeight: theme === 'dark' ? 600 : 400 }}>{withPx(shortValue(dark))}</td>
                         </>
                       ) : (
-                        <td style={{ ...cell, ...mono }}>{shortValue(light)}</td>
+                        <td style={{ ...cell, ...mono }}>{withPx(shortValue(light))}</td>
                       )}
-                      <td style={{ ...cell, ...mono, color: text.subtle }}>{resolved[t.cssVar]}</td>
+                      <td style={{ ...cell, ...mono, color: text.subtle }}>{withPx(resolved[t.cssVar])}</td>
                     </tr>
                   );
                 })}
@@ -186,7 +187,7 @@ function PrimitivePalette() {
                   </div>
                   <div style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}>{t.name}</div>
                   <div style={{ fontSize: 11, color: text.subtle, fontFamily: 'ui-monospace, Menlo, monospace' }}>
-                    {resolved[t.cssVar]}
+                    {withPx(resolved[t.cssVar])}
                   </div>
                 </div>
               ))}

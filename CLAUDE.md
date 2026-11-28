@@ -21,6 +21,8 @@ Never treat Figma as an input: a difference between Figma and code is drift to f
 - Components use only category tokens (e.g. `--ingrid-input-…`), text-style classes and the
   shared focus-ring tokens. No raw values, no primitives, no other semantic tokens.
 - A component's CSS uses exactly the tokens its contract lists.
+- Sizes are px in the token JSON (Figma works in px) and rem in CSS (16px = 1rem); Storybook
+  shows them as `1.5rem (24px)`. Write new size values in px in the JSON.
 - Each token tier aliases only the tier above it. Every token carries scopes, WEB code
   syntax and a description, because Figma is rebuilt from the JSON alone.
 - Never rename or delete a token, prop or variant without asking: both are breaking changes.

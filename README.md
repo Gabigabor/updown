@@ -37,7 +37,7 @@ Requires Node 22 or later and pnpm 10.
 
 | Command | Fails when |
 | --- | --- |
-| `pnpm tokens` | A token has no valid code syntax, two share a CSS name, or an alias is broken. |
+| `pnpm tokens` | Builds the CSS: sizes and letter spacing are px in the JSON (as in Figma) and become rem (16px = 1rem). Fails when a token has no valid code syntax, two share a CSS name, or an alias is broken. |
 | `pnpm tokens:validate` | A token breaks the taxonomy: missing description, scopes or mode; `ALL_SCOPES`; a raw value above the primitive tier; an alias that skips a tier; a text style not bound to Typography. Contrast below 4.5:1 is a warning. |
 | `pnpm contracts` | A contract isn't valid JSON or has an unknown field, an anatomy part isn't marked with `data-part` in the component, a rule example uses an invalid prop value, a binding points at a missing token, two bindings collide, a binding never applies, the CSS Module uses a token the contract doesn't list (or misses one it does), or the stories lack `Playground` or a title matching the contract. |
 | `pnpm lint:css` | Component CSS has raw values, primitives or non-category semantic tokens. |

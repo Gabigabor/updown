@@ -56,7 +56,7 @@ function check(el: Element, c: Contract, args: Record<string, unknown>, theme: s
       token: b.token ?? '',
       css,
       resolved,
-      isColour: !!resolved && !/^-?[\d.]+(px)?$/.test(resolved) && CSS.supports('color', resolved),
+      isColour: !!resolved && !/^-?[\d.]+(px|rem)?$/.test(resolved) && CSS.supports('color', resolved),
       ok: parts.has(b.part) ? used.has(css) : null,
     };
   });

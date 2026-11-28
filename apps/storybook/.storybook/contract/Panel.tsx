@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useChannel } from 'storybook/manager-api';
 import { useTheme } from 'storybook/theming';
+import { withPx } from '../units';
 import { REQUEST_EVENT, RESULT_EVENT, type ContractResult } from './shared';
 
 const checker = 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 10px 10px';
@@ -77,7 +78,7 @@ export function ContractPanel() {
                     <span style={mono}>{r.resolved}</span>
                   </span>
                 ) : (
-                  <span style={mono}>{r.resolved || (r.textStyle ? 'text style class' : '')}</span>
+                  <span style={mono}>{withPx(r.resolved) || (r.textStyle ? 'text style class' : '')}</span>
                 )}
               </td>
               <td style={{ ...cell, fontWeight: 700, color: r.ok === null ? muted : r.ok ? good : bad }} title={r.ok === null ? 'This part isn’t rendered in this story' : r.ok ? 'Used by the CSS' : 'Not used by the CSS'}>
