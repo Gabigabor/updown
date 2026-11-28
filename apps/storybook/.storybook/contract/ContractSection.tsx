@@ -184,7 +184,10 @@ export function ContractSection() {
   );
 
   return (
-    <section className="sb-unstyled" style={{ marginTop: 48, color: ink, fontFamily: 'var(--ingrid-font-family-sans)' }}>
+    // The Docs page around this section is always light, so the section pins Light mode too;
+    // otherwise a dark OS setting (prefers-color-scheme) would give dark tokens on a light page.
+    // Only the example stages follow the Light/Dark switch.
+    <section data-theme="light" className="sb-unstyled" style={{ marginTop: 48, color: ink, fontFamily: 'var(--ingrid-font-family-sans)' }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', borderBottom: `1px solid ${line}`, paddingBottom: 12 }}>
         <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>Contract</h2>
