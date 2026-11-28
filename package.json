@@ -1,0 +1,23 @@
+{
+  "name": "updown",
+  "private": true,
+  "description": "Code-first design system POC: code is the source of truth, Figma is generated from it.",
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "tokens": "node packages/tokens/scripts/build.mjs",
+    "tokens:validate": "node packages/tokens/scripts/validate.mjs",
+    "contracts": "node packages/contracts/scripts/build.mjs",
+    "lint:css": "node scripts/check-css-tokens.mjs",
+    "check": "pnpm tokens && pnpm tokens:validate && pnpm contracts && pnpm lint:css",
+    "typecheck": "tsc -p packages/react --noEmit && tsc -p packages/tokens --noEmit && tsc -p apps/storybook --noEmit",
+    "storybook": "pnpm tokens && pnpm --filter @updown/storybook dev",
+    "build-storybook": "pnpm tokens && pnpm --filter @updown/storybook build"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

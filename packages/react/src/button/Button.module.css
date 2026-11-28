@@ -1,0 +1,166 @@
+/*
+ * Button. Every value comes from a token listed in Button.contract.ts; the contract check
+ * fails if this file uses a token the contract doesn't list, or misses one it does.
+ *
+ * Props arrive as data attributes:   data-appearance  filled | outlined | text
+ *                                    data-variant     primary | neutral | destructive | inverse
+ *                                    data-size        small | medium | large
+ * React Aria adds interaction state: data-hovered, data-pressed, data-focus-visible, data-disabled
+ *
+ * [data-preview-state] on a wrapper forces a state for the AllStates story only.
+ */
+
+.button {
+  /* Per-instance values, set by the rules below. */
+  --_bg: transparent;
+  --_border: transparent;
+  --_border-width: 0;
+  --_label: currentColor;
+  --_overlay: transparent;
+  --_hover: var(--ingrid-input-state-hover);
+  --_focus: var(--ingrid-input-state-focus);
+  --_pressed: var(--ingrid-input-state-pressed);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap);
+  height: var(--_height);
+  min-width: var(--_height);
+  margin: 0;
+  padding: 0 var(--_padding-x);
+  border: 0;
+  border-radius: var(--ingrid-input-border-radius);
+  /* Inside stroke, like the Figma component: it doesn't change the button's size. */
+  box-shadow: inset 0 0 0 var(--_border-width) var(--_border);
+  background: var(--_bg);
+  color: var(--_label);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* State overlay: a separate layer, so the base colour never changes. */
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--_overlay);
+  pointer-events: none;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--_icon);
+  height: var(--_icon);
+}
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Size ----------------------------------------------------------------------------- */
+.button[data-size='small'] {
+  --_height: var(--ingrid-input-small-height);
+  --_padding-x: var(--ingrid-input-small-padding-x);
+  --_gap: var(--ingrid-input-small-gap);
+  --_icon: var(--ingrid-input-small-icon-size);
+}
+.button[data-size='medium'] {
+  --_height: var(--ingrid-input-medium-height);
+  --_padding-x: var(--ingrid-input-medium-padding-x);
+  --_gap: var(--ingrid-input-medium-gap);
+  --_icon: var(--ingrid-input-medium-icon-size);
+}
+.button[data-size='large'] {
+  --_height: var(--ingrid-input-large-height);
+  --_padding-x: var(--ingrid-input-large-padding-x);
+  --_gap: var(--ingrid-input-large-gap);
+  --_icon: var(--ingrid-input-large-icon-size);
+}
+
+/* ---- Appearance × variant ------------------------------------------------------------- */
+.button[data-appearance='filled'][data-variant='primary'] {
+  --_bg: var(--ingrid-input-primary-filled-background);
+  --_label: var(--ingrid-input-primary-filled-label);
+}
+.button[data-appearance='filled'][data-variant='neutral'] {
+  --_bg: var(--ingrid-input-neutral-filled-background);
+  --_label: var(--ingrid-input-neutral-filled-label);
+}
+.button[data-appearance='filled'][data-variant='destructive'] {
+  --_bg: var(--ingrid-input-destructive-filled-background);
+  --_label: var(--ingrid-input-destructive-filled-label);
+}
+.button[data-appearance='filled'][data-variant='inverse'] {
+  --_bg: var(--ingrid-input-inverse-filled-background);
+  --_label: var(--ingrid-input-inverse-filled-label);
+}
+
+.button[data-appearance='outlined'] {
+  --_border-width: var(--ingrid-input-border-width);
+}
+.button[data-appearance='outlined'][data-variant='primary'] {
+  --_border: var(--ingrid-input-primary-outlined-border);
+  --_label: var(--ingrid-input-primary-outlined-label);
+}
+.button[data-appearance='outlined'][data-variant='neutral'] {
+  --_border: var(--ingrid-input-neutral-outlined-border);
+  --_label: var(--ingrid-input-neutral-outlined-label);
+}
+.button[data-appearance='outlined'][data-variant='destructive'] {
+  --_border: var(--ingrid-input-destructive-outlined-border);
+  --_label: var(--ingrid-input-destructive-outlined-label);
+}
+.button[data-appearance='outlined'][data-variant='inverse'] {
+  --_border: var(--ingrid-input-inverse-outlined-border);
+  --_label: var(--ingrid-input-inverse-outlined-label);
+}
+
+.button[data-appearance='text'][data-variant='primary'] { --_label: var(--ingrid-input-primary-text-label); }
+.button[data-appearance='text'][data-variant='neutral'] { --_label: var(--ingrid-input-neutral-text-label); }
+.button[data-appearance='text'][data-variant='destructive'] { --_label: var(--ingrid-input-destructive-text-label); }
+.button[data-appearance='text'][data-variant='inverse'] { --_label: var(--ingrid-input-inverse-text-label); }
+
+/* Dark containers get the inverse overlays. */
+.button[data-appearance='filled'][data-variant='neutral'],
+.button[data-appearance='outlined'][data-variant='inverse'],
+.button[data-appearance='text'][data-variant='inverse'] {
+  --_hover: var(--ingrid-input-state-inverse-hover);
+  --_focus: var(--ingrid-input-state-inverse-focus);
+  --_pressed: var(--ingrid-input-state-inverse-pressed);
+}
+
+/* ---- States (later rules win: focus < hover < pressed) --------------------------------- */
+.button[data-focus-visible],
+:global([data-preview-state='focused']) > .button {
+  --_overlay: var(--_focus);
+  outline: var(--ingrid-focus-ring-width) solid var(--ingrid-color-focus-ring);
+  outline-offset: var(--ingrid-focus-ring-offset);
+}
+.button[data-hovered],
+:global([data-preview-state='hovered']) > .button {
+  --_overlay: var(--_hover);
+}
+.button[data-pressed],
+:global([data-preview-state='pressed']) > .button {
+  --_overlay: var(--_pressed);
+}
+
+/* Disabled: every selector includes [data-appearance][data-variant], so it outranks the colour rules. */
+.button[data-disabled][data-appearance][data-variant] {
+  --_overlay: transparent;
+  --_label: var(--ingrid-input-disabled-label);
+  cursor: not-allowed;
+}
+.button[data-disabled][data-appearance='filled'][data-variant] { --_bg: var(--ingrid-input-disabled-background); }
+.button[data-disabled][data-appearance='outlined'][data-variant] { --_border: var(--ingrid-input-disabled-border); }
+.button[data-disabled][data-appearance][data-variant='inverse'] { --_label: var(--ingrid-input-inverse-disabled-label); }
+.button[data-disabled][data-appearance='filled'][data-variant='inverse'] { --_bg: var(--ingrid-input-inverse-disabled-background); }
+.button[data-disabled][data-appearance='outlined'][data-variant='inverse'] { --_border: var(--ingrid-input-inverse-disabled-border); }
