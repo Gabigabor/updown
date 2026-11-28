@@ -72,3 +72,7 @@ Both must pass. Read any contrast warning and report it; don't change other toke
 
 Report: token path → alias → CSS name, and which component will use it. If a component's
 contract should use it, update the contract and run `pnpm contracts`.
+
+Then commit the change on a branch and **ask the user whether to open a pull request**
+(in their language, e.g. "Elkészült, a checkek zöldek. Nyissak PR-t?"). Don't open a PR,
+or push to an existing PR's branch, until they say yes.
