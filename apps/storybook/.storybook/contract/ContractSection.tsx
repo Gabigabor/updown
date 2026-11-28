@@ -146,8 +146,8 @@ function RuleCard({ rule, kind, contract, render, theme }: { rule: ContractRule;
 
 // ---- the section ------------------------------------------------------------------------
 export function ContractSection() {
-  const { csfFile } = useOf('meta');
-  const meta = csfFile.meta as {
+  const resolved = useOf('meta');
+  const meta = (resolved.type === 'meta' ? resolved.csfFile.meta : {}) as {
     component?: ComponentType<Record<string, unknown>>;
     render?: (args: Record<string, unknown>, context: unknown) => ReactNode;
     args?: Record<string, unknown>;
