@@ -2,7 +2,8 @@
 // tab): the alias as its Figma variable name on top, the final raw value under it. A token
 // with no alias (a primitive) shows its raw value only. No token-file imports here, so the
 // add-on panels (which run outside the preview) can use it too.
-import type { CSSProperties } from 'react';
+// The add-on panels are built with the classic JSX transform, which needs React in scope.
+import React, { type CSSProperties } from 'react';
 import { withPx } from './units';
 
 export type AliasRef = { collection: string; name: string };
